@@ -6,124 +6,169 @@
 <title>Money20/20 ME — Team Quick Access</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
+  /* ===== Brand vibe (Money20/20 Middle East) ===== */
   :root{
-    --bg:#0b0e13;
-    --bg2:#0e1117;
-    --card:#141923;
-    --muted:#8b95a7;
-    --text:#e8ecf3;
-    --border:#23283a;
-    --a1:#2ea3ff; /* cyan */
-    --a2:#a855f7; /* violet */
-    --ring:0 0 0 2px rgba(46,163,255,.25), 0 0 24px rgba(168,85,247,.18);
+    --black:#0b0b0d;
+    --bg:#0b0b0d;
+    --bg2:#0f1116;
+    --card:#141922;
+    --muted:#9aa4b2;
+    --text:#f5f7fa;
+    --teal1:#0ec0a7;
+    --teal2:#28d6b2;
+    --gold:#c9a84c;
+    --border:#222739;
+    --danger:#ff5257;
+    --danger2:#ff7b66;
+    --ring:0 0 0 2px rgba(40,214,178,.25),0 0 24px rgba(201,168,76,.16);
   }
+
   *{box-sizing:border-box}
   body{
-    margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    margin:0;
+    font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     color:var(--text);
     background:
-      radial-gradient(1200px 600px at 80% -10%, rgba(168,85,247,.15), transparent 60%),
-      radial-gradient(1000px 700px at -10% 110%, rgba(46,163,255,.18), transparent 60%),
+      radial-gradient(1200px 640px at 80% -10%, rgba(14,192,167,.18), transparent 55%),
+      radial-gradient(1000px 700px at -10% 110%, rgba(201,168,76,.12), transparent 60%),
       linear-gradient(180deg, var(--bg), var(--bg2));
   }
-  .wrap{max-width:1120px; margin:36px auto; padding:0 20px}
-  header{display:flex; gap:16px; justify-content:space-between; align-items:flex-start; flex-wrap:wrap}
-  h1{margin:0; font-size:clamp(22px,4vw,36px); letter-spacing:.2px}
-  .accent{background:linear-gradient(90deg,var(--a1),var(--a2)); -webkit-background-clip:text; background-clip:text; color:transparent}
-  .note{color:var(--muted); font-size:13px; margin-top:6px}
 
-  /* nav tabs */
-  nav{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .wrap{max-width:1120px;margin:34px auto;padding:0 20px}
+  header{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+  h1{margin:0;font-size:clamp(22px,4vw,36px);letter-spacing:.2px}
+  .accent{background:linear-gradient(90deg,var(--teal1),var(--teal2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .note{color:var(--muted);font-size:13px;margin-top:6px}
+
+  /* Nav tabs */
+  nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   nav a{
-    color:var(--muted); text-decoration:none; padding:10px 14px; border-radius:12px;
-    border:1px solid var(--border); background:rgba(20,25,35,.6); backdrop-filter: blur(6px);
-    transition:all .2s ease;
+    color:var(--muted);text-decoration:none;padding:10px 14px;border-radius:999px;
+    border:1px solid var(--border);background:#0f121a;backdrop-filter:blur(6px);transition:all .2s ease
   }
-  nav a:hover{box-shadow:var(--ring); color:#fff}
+  nav a:hover{box-shadow:var(--ring);color:#fff}
   nav a.active{
-    color:#fff;
+    color:#111;
     border:1px solid transparent;
     background:
-      linear-gradient(var(--card), var(--card)) padding-box,
-      linear-gradient(135deg, rgba(46,163,255,.9), rgba(168,85,247,.9)) border-box;
-    box-shadow:var(--ring);
+      linear-gradient(#12d3b1,#12d3b1) padding-box,
+      linear-gradient(135deg,#12d3b1,#caa64c) border-box;
   }
 
-  /* toolbar */
-  .toolbar{display:flex; gap:8px; margin:14px 0 6px; flex-wrap:wrap}
+  /* Toolbar */
+  .toolbar{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
   .btn{
-    border:1px solid var(--border); background:rgba(20,25,35,.6); color:#e8ecf3;
-    padding:8px 12px; border-radius:10px; cursor:pointer; transition:all .2s ease;
+    border:1px solid var(--border);background:#10131b;color:#f2f5f9;
+    padding:8px 12px;border-radius:10px;cursor:pointer;transition:all .2s ease
   }
   .btn:hover{box-shadow:var(--ring)}
   .sep{flex:1}
 
-  /* sections & grid */
-  .page{margin-top:8px}
+  /* Pages */
+  .page{margin-top:10px}
   .hide{display:none}
 
-  /* accordion cards (gradient borders) */
-  .accordion{display:grid; gap:14px}
+  /* Accordion cards – gradient borders */
+  .accordion{display:grid;gap:14px}
   details{
-    border:1px solid transparent; border-radius:16px; overflow:hidden; position:relative;
+    border:1px solid transparent;border-radius:16px;overflow:hidden;position:relative;
     background:
-      linear-gradient(var(--card), var(--card)) padding-box,
-      linear-gradient(135deg, rgba(46,163,255,.7), rgba(168,85,247,.7)) border-box;
-    transition:transform .12s ease;
+      linear-gradient(var(--card),var(--card)) padding-box,
+      linear-gradient(135deg, rgba(14,192,167,.85), rgba(201,168,76,.9)) border-box;
+    transition:transform .12s ease
   }
   details:hover{transform:translateY(-1px)}
+  details.danger{
+    background:
+      linear-gradient(var(--card),var(--card)) padding-box,
+      linear-gradient(135deg, rgba(255,82,87,.95), rgba(255,123,102,.9)) border-box;
+  }
+
   summary{
-    list-style:none; padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:12px; font-weight:700;
-    letter-spacing:.2px; user-select:none;
+    list-style:none;padding:18px 22px;cursor:pointer;display:flex;align-items:center;gap:12px;
+    font-weight:800;letter-spacing:.2px;user-select:none
   }
   summary::-webkit-details-marker{display:none}
   .chev{
-    flex:0 0 22px; height:22px; border-radius:6px; border:1px solid var(--border);
-    display:grid; place-items:center; transition:transform .18s ease, background .2s ease;
-    background:linear-gradient(180deg, #1a2130, #121723);
+    flex:0 0 22px;height:22px;border-radius:6px;border:1px solid var(--border);
+    display:grid;place-items:center;transition:transform .18s ease;background:linear-gradient(180deg,#1a2130,#111520)
   }
-  .chev svg{width:14px; height:14px}
+  .chev svg{width:14px;height:14px}
   details[open] .chev{transform:rotate(90deg)}
   .panel{padding:0 22px 22px}
 
-  /* lists */
+  /* Lists */
   ul.list{margin:8px 0 0 18px}
-  .list li{padding:8px 0; border-bottom:1px dashed var(--border)}
+  .list li{padding:8px 0;border-bottom:1px dashed var(--border);display:flex;align-items:center;gap:10px}
   .list li:last-child{border-bottom:none}
-  .k{color:var(--muted); font-size:13px}
+  .k{color:var(--muted);font-size:13px}
 
-  /* areas page */
-  .hero{display:grid; gap:12px; margin:10px 0 12px}
-  .svgph{width:360px; max-width:100%; border-radius:12px; border:1px solid var(--border)}
-  input[type=search]{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border);
-    background:#12141b; color:#e8ecf3; box-shadow: inset 0 0 0 9999px rgba(255,255,255,0); transition:box-shadow .2s ease}
-  input[type=search]:focus{outline:none; box-shadow:var(--ring)}
-  table{width:100%; border-collapse:collapse; margin-top:8px}
-  th,td{padding:12px; border-bottom:1px solid var(--border); text-align:left}
-  th{color:var(--muted); font-weight:600}
+  /* Copy chip */
+  .chip{
+    margin-left:auto;font-size:12px;border:1px solid var(--border);padding:3px 8px;border-radius:999px;cursor:pointer;
+    background:#10131b;color:#dfe6ee;user-select:none
+  }
+  .chip:hover{box-shadow:var(--ring)}
+  .chip.good{border-color:#12d3b1;color:#111;background:#12d3b1}
+
+  /* Areas table + search */
+  .hero{display:grid;gap:12px;margin:10px 0 12px}
+  .svgph{width:360px;max-width:100%;border-radius:12px;border:1px solid var(--border)}
+  input[type=search]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);
+    background:#11151e;color:#f2f5f9;transition:box-shadow .2s ease}
+  input[type=search]:focus{outline:none;box-shadow:var(--ring)}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left}
+  th{color:var(--muted);font-weight:600}
   tr.off{display:none}
 
-  /* top10s */
-  .two-col{display:grid; gap:16px}
-  @media(min-width:720px){.two-col{grid-template-columns:1.2fr .8fr}}
+  /* Top10s */
+  .two-col{display:grid;gap:16px}
+  @media(min-width:760px){.two-col{grid-template-columns:1.25fr .75fr}}
   ol.top10{margin:8px 0 0 22px}
-  ol.top10 li{padding:10px 8px; border-bottom:1px dashed var(--border)}
+  ol.top10 li{padding:10px 8px;border-bottom:1px dashed var(--border)}
   ol.top10 li:last-child{border-bottom:none}
-  .meta{
-    margin-top:10px; padding:12px; border:1px solid var(--border); border-radius:12px;
-    background:linear-gradient(180deg, #10141d, #0c1018); color:var(--muted); font-size:13px
+  .meta{margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#10141d,#0c1018);color:var(--muted);font-size:13px}
+
+  /* Key stats – “two rows scattered” mosaic */
+  .stats-wrap{margin-top:12px}
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:110px;gap:12px
+  }
+  .stat{
+    background:#0f141e;border:1px solid var(--border);border-radius:14px;
+    display:flex;flex-direction:column;justify-content:center;padding:16px 18px;
+    position:relative;overflow:hidden
+  }
+  .stat:before{
+    content:"";position:absolute;inset:0;border-radius:14px;
+    background:linear-gradient(135deg, rgba(14,192,167,.18), rgba(201,168,76,.18));
+    opacity:.25;pointer-events:none;mix-blend:screen
+  }
+  .knum{font-size:28px;font-weight:800;line-height:1}
+  .lbl{font-size:12px;color:var(--muted);margin-top:6px}
+  .span-2{grid-column:span 2}
+  .span-3{grid-column:span 3}
+  .span-4{grid-column:span 4}
+  .span-5{grid-column:span 5}
+  @media(max-width:900px){
+    .span-5{grid-column:span 4}
+  }
+  @media(max-width:740px){
+    .stats-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:100px}
+    .span-5{grid-column:span 3}.span-4{grid-column:span 3}.span-3{grid-column:span 3}.span-2{grid-column:span 3}
   }
 
-  /* subtle grid overlay for flair */
+  /* Subtle grid overlay for tech flair */
   .grid-bg:before{
-    content:""; position:fixed; inset:0; pointer-events:none; opacity:.06;
+    content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;
     background-image:
-      linear-gradient(to right, #fff 1px, transparent 1px),
-      linear-gradient(to bottom, #fff 1px, transparent 1px);
-    background-size: 32px 32px;
+      linear-gradient(to right,#fff 1px,transparent 1px),
+      linear-gradient(to bottom,#fff 1px,transparent 1px);
+    background-size:32px 32px
   }
 </style>
 </head>
@@ -132,7 +177,7 @@
   <header>
     <div>
       <h1><span class="accent">Money20/20 Middle East</span> — Team Quick Access</h1>
-      <div class="note">Single file • three views • paste content inside the EDIT BLOCK in this file.</div>
+      <div class="note">Single file • three views • paste content inside the EDIT BLOCK below.</div>
     </div>
     <nav id="nav">
       <a data-page="pocs" class="active" href="#pocs">POCs & Ops</a>
@@ -141,7 +186,7 @@
     </nav>
   </header>
 
-  <!-- tiny page toolbar -->
+  <!-- Page toolbar -->
   <div class="toolbar">
     <button class="btn" id="expandAll">Expand all</button>
     <button class="btn" id="collapseAll">Collapse all</button>
@@ -156,16 +201,11 @@
   <!-- AREAS -->
   <section id="areas" class="page hide">
     <div class="hero">
-      <!-- Inline SVG placeholder so no external image is required -->
+      <!-- Inline SVG floorplan placeholder -->
       <svg class="svgph" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map placeholder">
-        <defs>
-          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stop-color="#1f2431"/>
-            <stop offset="1" stop-color="#12141b"/>
-          </linearGradient>
-        </defs>
+        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1f2431"/><stop offset="1" stop-color="#12141b"/></linearGradient></defs>
         <rect width="800" height="500" fill="url(#g)"/>
-        <g fill="#2ea3ff" opacity=".28">
+        <g fill="#12d3b1" opacity=".33">
           <rect x="50" y="60" width="140" height="80" rx="8"/>
           <rect x="220" y="60" width="200" height="120" rx="8"/>
           <rect x="50" y="170" width="180" height="100" rx="8"/>
@@ -173,7 +213,7 @@
           <rect x="500" y="80" width="240" height="180" rx="8"/>
           <rect x="520" y="290" width="220" height="120" rx="8"/>
         </g>
-        <text x="400" y="255" text-anchor="middle" fill="#8b95a7" font-size="26" font-family="Inter,Arial,sans-serif">Floor Plan Placeholder</text>
+        <text x="400" y="255" text-anchor="middle" fill="#9aa4b2" font-size="26" font-family="Inter,Arial,sans-serif">Floor Plan Placeholder</text>
       </svg>
       <input id="searchAreas" type="search" placeholder="Search for area information..." />
       <span class="k">Tip: search by feature, hall, or location text.</span>
@@ -187,20 +227,28 @@
   <!-- TOP 10s -->
   <section id="top10s" class="page hide">
     <section class="accordion" id="topAcc"></section>
-    <!-- buttons removed as requested -->
   </section>
 </div>
 
-<!-- ========= EDIT BLOCK (paste your content only here) =================== -->
+<!-- ================== EDIT BLOCK (paste your content here) ================= -->
 <script>
+/* Last-updated label (optional) */
 const LAST_UPDATED = 'DD-MMM-YYYY';
 
 /* Page 1: POCs & Info — paste line-by-line items */
 const POCS = {
   wifi: `
-WiFi SSID: [Event-SSID] / Password: [password]
+WiFi SSID: [Event-SSID]  /  Password: [password]
 Back-of-house toilets: [Location A], [Location B]
 Staff access door codes: [xxxx] (Ops to update)
+`,
+  /* NEW: Critical info (red card). Keep short, most important first. */
+  critical: `
+Emergency (Police/Ambulance): 999
+Medical desk (onsite): +966 5xx xxx xxx
+Duty phone (Ops): +966 5xx xxx xxx
+Security control: +966 5xx xxx xxx
+Lost & Found: [Location / phone]
 `,
   timings: `
 Show Open: [Date/Time] → Close: [Date/Time]
@@ -208,22 +256,22 @@ Registration: [Time window]
 Build/Break: [Dates]
 `,
   stages: `
-Orbital Stage — [Name] — [Role] — [Phone]
-Cosmos Stage — [Name] — [Role] — [Phone]
-Announcement Stage — [Name] — [Role] — [Phone]
+Orbital Stage — [Name] — [Role] — +966 5xx xxx xxx
+Cosmos Stage — [Name] — [Role] — +966 5xx xxx xxx
+Announcement Stage — [Name] — [Role] — +966 5xx xxx xxx
 `,
   ops: `
-[Name] — Venue Ops — [Phone]
-[Name] — Security — [Phone]
-[Name] — Cleaning — [Phone]
+[Name] — Venue Ops — +966 5xx xxx xxx
+[Name] — Security — +966 5xx xxx xxx
+[Name] — Cleaning — +966 5xx xxx xxx
 `,
   protocol: `
-[Name] — Protocol Lead — [Phone]
-[Name] — VIP Transport — [Phone]
+[Name] — Protocol Lead — +966 5xx xxx xxx
+[Name] — VIP Transport — +966 5xx xxx xxx
 `,
   marketing: `
-[Name] — Branding/Signage — [Phone]
-[Name] — Social/PR — [Phone]
+[Name] — Branding/Signage — +966 5xx xxx xxx
+[Name] — Social/PR — +966 5xx xxx xxx
 `,
   locations: `
 Merch Store: Hall 3 — “The Garden”
@@ -232,7 +280,7 @@ Medical: [Location]
 `
 };
 
-/* Page 2: Areas — one row per line, separated by pipes “|”  (Feature | Hall | Location) */
+/* Page 2: Areas — one row per line, pipes “|”  (Feature | Hall | Location) */
 const AREAS = `
 AI Tour Desk | 5 | North of Hall 5, next to Info Desk
 Announcement Stage 1 / Private | 3 | Middle-west side of Hall 3
@@ -294,6 +342,7 @@ const TOP10 = {
 [Sponsor 9]
 [Sponsor 10]
 `,
+  /* Key stats: label: value. Keep 6–10 lines. */
   finalStats: `
 Total Attendees: [#]
 International Share: [%]
@@ -306,7 +355,7 @@ Media: [#]
 `
 };
 </script>
-<!-- ======================= END EDIT BLOCK =============================== -->
+<!-- ====================== END EDIT BLOCK ================================== -->
 
 <script>
 /*** helpers ***/
@@ -316,10 +365,11 @@ const pairBlock= s => s.trim().split(/\r?\n/).map(x=>x.trim()).filter(Boolean).m
 const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-/*** render POCs (all collapsed by default) ***/
+/*** POCs (collapsed) + Critical Info (red) + copy chips ***/
 (function renderPocs(){
   const sections = [
-    {title:'WiFi & Staff Toilet Access', list: liBlock(POCS.wifi)},
+    {title:'Wi-Fi & Staff Toilet Access', list: liBlock(POCS.wifi), danger:false},
+    {title:'Critical Info (Emergency / Duty)', list: liBlock(POCS.critical), danger:true},
     {title:'Event Timings',              list: liBlock(POCS.timings)},
     {title:'Stage Info & POCs',          list: liBlock(POCS.stages)},
     {title:'Ops POCs',                   list: liBlock(POCS.ops)},
@@ -328,16 +378,45 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
     {title:'Key Locations',              list: liBlock(POCS.locations)}
   ];
   const acc = $('#pocsAcc');
+
   sections.forEach((s)=>{
-    const d=document.createElement('details'); // no open ⇒ collapsed
+    const d=document.createElement('details');
+    if(s.danger) d.classList.add('danger');
+    const items = s.list.map(txt=>{
+      // copy chips for password or phone numbers
+      const pw = /password:\s*([^\n]+)/i.exec(txt);
+      const phAll = txt.match(/(\+?\d[\d\s\-\(\)]{6,}\d)/g) || [];
+      let chipHTML = '';
+      if(pw){ chipHTML += `<span class="chip" data-copy="${pw[1].trim()}">Copy password</span>`; }
+      else if(phAll.length){
+        // copy the first phone number
+        chipHTML += `<span class="chip" data-copy="${phAll[0].replace(/\s+/g,' ').trim()}">Copy phone</span>`;
+      }
+      return `<li><span>${txt}</span>${chipHTML}</li>`;
+    }).join('');
+
     d.innerHTML = `
       <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${s.title}</summary>
-      <div class="panel"><ul class="list">${s.list.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
+      <div class="panel"><ul class="list">${items}</ul></div>`;
     acc.appendChild(d);
+  });
+
+  // copy handler
+  acc.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.chip');
+    if(!btn) return;
+    const val = btn.getAttribute('data-copy');
+    if(!val) return;
+    navigator.clipboard.writeText(val).then(()=>{
+      const old = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('good');
+      setTimeout(()=>{ btn.textContent = old; btn.classList.remove('good'); }, 1200);
+    }).catch(()=>{ btn.textContent = 'Copy failed'; });
   });
 })();
 
-/*** render Areas ***/
+/*** AREAS ***/
 (function renderAreas(){
   const tbody = $('#areasTable tbody');
   csvBlock(AREAS).forEach(cols=>{
@@ -353,7 +432,7 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
   });
 })();
 
-/*** render Top10s (all collapsed by default) ***/
+/*** TOP 10s (collapsed) + key stats mosaic in 2 rows ***/
 (function renderTop10s(){
   const sections = [
     {id:'investors',title:'Top 10 Investors', list: liBlock(TOP10.investors), meta:'Criteria = strategic relevance + stage fit + availability onsite. Source: ISP.'},
@@ -362,6 +441,7 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
     {id:'sponsors', title:'Top 10 Sponsors',  list: liBlock(TOP10.sponsors),  meta:'Include key rights/activations. Source: Partnerships.'}
   ];
   const acc = $('#topAcc');
+
   sections.forEach((sec)=>{
     const d=document.createElement('details'); d.id=sec.id;
     d.innerHTML = `
@@ -371,10 +451,10 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
           <ol class="top10">${sec.list.map(item=>`<li>${item}</li>`).join('')}</ol>
           <div class="meta">${sec.meta}</div>
         </div>
-        <div class="meta"><strong>Status chips:</strong> <span class="k">use any labels you want</span><br>
+        <div class="meta"><strong>Status chips:</strong> <span class="k">add your own labels</span><br>
           <span style="display:inline-block;margin-top:8px">
-            <span class="btn" style="cursor:default">Placeholder</span>
-            <span class="btn" style="cursor:default">Update</span>
+            <span class="btn" style="cursor:default">Priority</span>
+            <span class="btn" style="cursor:default">Announce</span>
             <span class="btn" style="cursor:default">Onsite</span>
           </span>
         </div>
@@ -382,17 +462,22 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
     acc.appendChild(d);
   });
 
-  // final stats card (collapsed)
+  // Key stats mosaic (two rows, scattered widths)
   const pairs = pairBlock(TOP10.finalStats);
-  const statsHTML = pairs.map(p=>`<div class="meta" style="display:flex;justify-content:space-between;align-items:center"><span class="k">${p.label}</span><strong>${p.value||'-'}</strong></div>`).join('');
-  const fin=document.createElement('details'); fin.id='final';
-  fin.innerHTML = `
-    <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats</summary>
-    <div class="panel">${statsHTML}</div>`;
-  acc.appendChild(fin);
+  const widths = [4,3,2,3,4,3,2,3,4,3]; // will wrap into two rows via grid
+  const grid = document.createElement('div');
+  grid.className = 'stats-wrap';
+  let inner = `<details><summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats</summary><div class="panel"><div class="stats-grid">`;
+  pairs.forEach((p,i)=>{
+    const span = widths[i % widths.length];
+    inner += `<div class="stat span-${span}"><div class="knum">${p.value||'-'}</div><div class="lbl">${p.label}</div></div>`;
+  });
+  inner += `</div></div></details>`;
+  grid.innerHTML = inner;
+  acc.appendChild(grid);
 })();
 
-/*** tiny router (hash) ***/
+/*** Router (hash) + expand/collapse all ***/
 (function router(){
   const pages = $$('.page');
   const links = $$('#nav a');
@@ -408,16 +493,19 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
   window.addEventListener('hashchange', initFromHash);
   initFromHash();
 
-  // expand/collapse all for current page
+  // expand/collapse all within current page
+  const getActivePage = () => links.find(a=>a.classList.contains('active')).dataset.page;
   $('#expandAll').addEventListener('click', ()=>{
-    $(`#${links.find(a=>a.classList.contains('active')).dataset.page}`)
-      .querySelectorAll('details').forEach(d=>d.open=true);
+    $(`#${getActivePage()}`).querySelectorAll('details').forEach(d=>d.open=true);
   });
   $('#collapseAll').addEventListener('click', ()=>{
-    $(`#${links.find(a=>a.classList.contains('active')).dataset.page}`)
-      .querySelectorAll('details').forEach(d=>d.open=false);
+    $(`#${getActivePage()}`).querySelectorAll('details').forEach(d=>d.open=false);
   });
 })();
+
+/* Optional: show last-updated somewhere if you want
+// document.body.insertAdjacentHTML('beforeend', `<div style="position:fixed;bottom:10px;right:14px;font:12px/1 Inter;color:#9aa4b2">Last updated: ${LAST_UPDATED}</div>`);
+*/
 </script>
 </body>
 </html>
