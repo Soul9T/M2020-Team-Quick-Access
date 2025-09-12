@@ -5,70 +5,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Money20/20 ME — Team Quick Access</title>
 
-<!-- Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-<!-- Styles -->
 <style>
-  :root{--bg:#0f1115;--card:#171a21;--muted:#8b95a7;--text:#e8ecf3;--accent:#2ea3ff;--border:#232837}
+  :root{
+    --bg:#0b0e13;
+    --bg2:#0e1117;
+    --card:#141923;
+    --muted:#8b95a7;
+    --text:#e8ecf3;
+    --border:#23283a;
+    --a1:#2ea3ff; /* cyan */
+    --a2:#a855f7; /* violet */
+    --ring:0 0 0 2px rgba(46,163,255,.25), 0 0 24px rgba(168,85,247,.18);
+  }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
-  .wrap{max-width:1120px;margin:36px auto;padding:0 20px}
-  header{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
-  h1{margin:0;font-size:clamp(22px,4vw,36px)}
-  .note{color:var(--muted);font-size:13px;margin-top:6px}
-  nav{display:flex;gap:8px;flex-wrap:wrap}
-  nav a{color:var(--muted);text-decoration:none;padding:10px 14px;border:1px solid var(--border);border-radius:12px}
-  nav a.active{color:var(--text);border-color:var(--accent)}
-  /* Sections shown as "pages" */
-  .page{margin-top:18px}
+  body{
+    margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(168,85,247,.15), transparent 60%),
+      radial-gradient(1000px 700px at -10% 110%, rgba(46,163,255,.18), transparent 60%),
+      linear-gradient(180deg, var(--bg), var(--bg2));
+  }
+  .wrap{max-width:1120px; margin:36px auto; padding:0 20px}
+  header{display:flex; gap:16px; justify-content:space-between; align-items:flex-start; flex-wrap:wrap}
+  h1{margin:0; font-size:clamp(22px,4vw,36px); letter-spacing:.2px}
+  .accent{background:linear-gradient(90deg,var(--a1),var(--a2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .note{color:var(--muted); font-size:13px; margin-top:6px}
+
+  /* nav tabs */
+  nav{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  nav a{
+    color:var(--muted); text-decoration:none; padding:10px 14px; border-radius:12px;
+    border:1px solid var(--border); background:rgba(20,25,35,.6); backdrop-filter: blur(6px);
+    transition:all .2s ease;
+  }
+  nav a:hover{box-shadow:var(--ring); color:#fff}
+  nav a.active{
+    color:#fff;
+    border:1px solid transparent;
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      linear-gradient(135deg, rgba(46,163,255,.9), rgba(168,85,247,.9)) border-box;
+    box-shadow:var(--ring);
+  }
+
+  /* toolbar */
+  .toolbar{display:flex; gap:8px; margin:14px 0 6px; flex-wrap:wrap}
+  .btn{
+    border:1px solid var(--border); background:rgba(20,25,35,.6); color:#e8ecf3;
+    padding:8px 12px; border-radius:10px; cursor:pointer; transition:all .2s ease;
+  }
+  .btn:hover{box-shadow:var(--ring)}
+  .sep{flex:1}
+
+  /* sections & grid */
+  .page{margin-top:8px}
   .hide{display:none}
 
-  /* Accordions */
-  .accordion{display:grid;gap:14px}
-  details{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-  summary{list-style:none;padding:18px 22px;cursor:pointer;display:flex;align-items:center;gap:12px;font-weight:700}
+  /* accordion cards (gradient borders) */
+  .accordion{display:grid; gap:14px}
+  details{
+    border:1px solid transparent; border-radius:16px; overflow:hidden; position:relative;
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      linear-gradient(135deg, rgba(46,163,255,.7), rgba(168,85,247,.7)) border-box;
+    transition:transform .12s ease;
+  }
+  details:hover{transform:translateY(-1px)}
+  summary{
+    list-style:none; padding:18px 22px; cursor:pointer; display:flex; align-items:center; gap:12px; font-weight:700;
+    letter-spacing:.2px; user-select:none;
+  }
   summary::-webkit-details-marker{display:none}
-  .chev{flex:0 0 22px;height:22px;border-radius:6px;border:1px solid var(--border);display:grid;place-items:center;transition:transform .18s ease}
-  .chev svg{width:14px;height:14px}
+  .chev{
+    flex:0 0 22px; height:22px; border-radius:6px; border:1px solid var(--border);
+    display:grid; place-items:center; transition:transform .18s ease, background .2s ease;
+    background:linear-gradient(180deg, #1a2130, #121723);
+  }
+  .chev svg{width:14px; height:14px}
   details[open] .chev{transform:rotate(90deg)}
   .panel{padding:0 22px 22px}
-  ul.list{margin:8px 0 0 18px} .list li{padding:8px 0;border-bottom:1px dashed var(--border)} .list li:last-child{border-bottom:none}
-  .k{color:var(--muted);font-size:13px}
 
-  /* Areas table + search */
-  .hero{display:grid;gap:12px;margin:10px 0 12px}
-  .hero img{max-width:360px;width:100%;border-radius:12px;border:1px solid var(--border)}
-  input[type=search]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#12141b;color:var(--text)}
-  table{width:100%;border-collapse:collapse;margin-top:8px}
-  th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left}
-  th{color:var(--muted);font-weight:600}
+  /* lists */
+  ul.list{margin:8px 0 0 18px}
+  .list li{padding:8px 0; border-bottom:1px dashed var(--border)}
+  .list li:last-child{border-bottom:none}
+  .k{color:var(--muted); font-size:13px}
+
+  /* areas page */
+  .hero{display:grid; gap:12px; margin:10px 0 12px}
+  .svgph{width:360px; max-width:100%; border-radius:12px; border:1px solid var(--border)}
+  input[type=search]{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border);
+    background:#12141b; color:#e8ecf3; box-shadow: inset 0 0 0 9999px rgba(255,255,255,0); transition:box-shadow .2s ease}
+  input[type=search]:focus{outline:none; box-shadow:var(--ring)}
+  table{width:100%; border-collapse:collapse; margin-top:8px}
+  th,td{padding:12px; border-bottom:1px solid var(--border); text-align:left}
+  th{color:var(--muted); font-weight:600}
   tr.off{display:none}
 
-  /* Top10s */
-  .two-col{display:grid;gap:16px}
+  /* top10s */
+  .two-col{display:grid; gap:16px}
   @media(min-width:720px){.two-col{grid-template-columns:1.2fr .8fr}}
-  ol.top10{margin:8px 0 0 22px} ol.top10 li{padding:10px 8px;border-bottom:1px dashed var(--border)} ol.top10 li:last-child{border-bottom:none}
-  .meta{margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:12px;background:#12141b;color:var(--muted);font-size:13px}
-  .tag{display:inline-block;padding:2px 8px;border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--muted)}
-  .grid-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  @media(min-width:680px){.grid-stats{grid-template-columns:repeat(4,1fr)}}
-  .stat{background:#12141b;border:1px solid var(--border);border-radius:14px;padding:14px}
-  .stat .knum{font-size:22px;font-weight:700}
-  .stat .lbl{font-size:12px;color:var(--muted)}
-  .footer{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
-  .btn{background:transparent;border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:12px;text-decoration:none}
-  .btn:hover{border-color:var(--accent)}
-  .accent{color:var(--accent)}
+  ol.top10{margin:8px 0 0 22px}
+  ol.top10 li{padding:10px 8px; border-bottom:1px dashed var(--border)}
+  ol.top10 li:last-child{border-bottom:none}
+  .meta{
+    margin-top:10px; padding:12px; border:1px solid var(--border); border-radius:12px;
+    background:linear-gradient(180deg, #10141d, #0c1018); color:var(--muted); font-size:13px
+  }
+
+  /* subtle grid overlay for flair */
+  .grid-bg:before{
+    content:""; position:fixed; inset:0; pointer-events:none; opacity:.06;
+    background-image:
+      linear-gradient(to right, #fff 1px, transparent 1px),
+      linear-gradient(to bottom, #fff 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
 </style>
 </head>
-<body>
+<body class="grid-bg">
 <div class="wrap">
   <header>
     <div>
-      <h1>Money20/20 Middle East — Team Quick Access</h1>
-      <div class="note">One file • three pages • update via the EDIT BLOCK in the code. <span id="lastUpdated" class="accent"></span></div>
+      <h1><span class="accent">Money20/20 Middle East</span> — Team Quick Access</h1>
+      <div class="note">Single file • three views • paste content inside the EDIT BLOCK in this file.</div>
     </div>
     <nav id="nav">
       <a data-page="pocs" class="active" href="#pocs">POCs & Ops</a>
@@ -76,6 +140,13 @@
       <a data-page="top10s" href="#top10s">Top 10s</a>
     </nav>
   </header>
+
+  <!-- tiny page toolbar -->
+  <div class="toolbar">
+    <button class="btn" id="expandAll">Expand all</button>
+    <button class="btn" id="collapseAll">Collapse all</button>
+    <span class="sep"></span>
+  </div>
 
   <!-- POCs & INFO -->
   <section id="pocs" class="page">
@@ -85,12 +156,28 @@
   <!-- AREAS -->
   <section id="areas" class="page hide">
     <div class="hero">
-      <!-- Replace with your floorplan image if you want -->
-      <img src="map-placeholder.png" alt="Floor plan (placeholder)">
+      <!-- Inline SVG placeholder so no external image is required -->
+      <svg class="svgph" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map placeholder">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#1f2431"/>
+            <stop offset="1" stop-color="#12141b"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="500" fill="url(#g)"/>
+        <g fill="#2ea3ff" opacity=".28">
+          <rect x="50" y="60" width="140" height="80" rx="8"/>
+          <rect x="220" y="60" width="200" height="120" rx="8"/>
+          <rect x="50" y="170" width="180" height="100" rx="8"/>
+          <rect x="260" y="210" width="200" height="140" rx="8"/>
+          <rect x="500" y="80" width="240" height="180" rx="8"/>
+          <rect x="520" y="290" width="220" height="120" rx="8"/>
+        </g>
+        <text x="400" y="255" text-anchor="middle" fill="#8b95a7" font-size="26" font-family="Inter,Arial,sans-serif">Floor Plan Placeholder</text>
+      </svg>
       <input id="searchAreas" type="search" placeholder="Search for area information..." />
       <span class="k">Tip: search by feature, hall, or location text.</span>
     </div>
-
     <table id="areasTable">
       <thead><tr><th>AREA/FEATURE</th><th>Hall</th><th>LOCATION</th></tr></thead>
       <tbody></tbody>
@@ -100,13 +187,7 @@
   <!-- TOP 10s -->
   <section id="top10s" class="page hide">
     <section class="accordion" id="topAcc"></section>
-    <div class="footer">
-      <a class="btn" href="#top10s#investors">Investors</a>
-      <a class="btn" href="#top10s#speakers">Speakers</a>
-      <a class="btn" href="#top10s#exhibs">Exhibitors</a>
-      <a class="btn" href="#top10s#sponsors">Sponsors</a>
-      <a class="btn" href="#top10s#final">Final Key Stats</a>
-    </div>
+    <!-- buttons removed as requested -->
   </section>
 </div>
 
@@ -227,7 +308,6 @@ Media: [#]
 </script>
 <!-- ======================= END EDIT BLOCK =============================== -->
 
-<!-- Logic -->
 <script>
 /*** helpers ***/
 const liBlock  = s => s.trim().split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
@@ -236,7 +316,7 @@ const pairBlock= s => s.trim().split(/\r?\n/).map(x=>x.trim()).filter(Boolean).m
 const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-/*** render POCs ***/
+/*** render POCs (all collapsed by default) ***/
 (function renderPocs(){
   const sections = [
     {title:'WiFi & Staff Toilet Access', list: liBlock(POCS.wifi)},
@@ -248,8 +328,8 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
     {title:'Key Locations',              list: liBlock(POCS.locations)}
   ];
   const acc = $('#pocsAcc');
-  sections.forEach((s,idx)=>{
-    const d=document.createElement('details'); if(idx===0)d.open=true;
+  sections.forEach((s)=>{
+    const d=document.createElement('details'); // no open ⇒ collapsed
     d.innerHTML = `
       <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${s.title}</summary>
       <div class="panel"><ul class="list">${s.list.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
@@ -269,13 +349,11 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
   const rows = $$('#areasTable tbody tr');
   $('#searchAreas').addEventListener('input', e=>{
     const term = e.target.value.trim().toLowerCase();
-    rows.forEach(tr=>{
-      tr.classList.toggle('off', !tr.textContent.toLowerCase().includes(term));
-    });
+    rows.forEach(tr=>{ tr.classList.toggle('off', !tr.textContent.toLowerCase().includes(term)); });
   });
 })();
 
-/*** render Top10s ***/
+/*** render Top10s (all collapsed by default) ***/
 (function renderTop10s(){
   const sections = [
     {id:'investors',title:'Top 10 Investors', list: liBlock(TOP10.investors), meta:'Criteria = strategic relevance + stage fit + availability onsite. Source: ISP.'},
@@ -284,8 +362,8 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
     {id:'sponsors', title:'Top 10 Sponsors',  list: liBlock(TOP10.sponsors),  meta:'Include key rights/activations. Source: Partnerships.'}
   ];
   const acc = $('#topAcc');
-  sections.forEach((sec,i)=>{
-    const d=document.createElement('details'); d.id=sec.id; if(i===0)d.open=true;
+  sections.forEach((sec)=>{
+    const d=document.createElement('details'); d.id=sec.id;
     d.innerHTML = `
       <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${sec.title}</summary>
       <div class="panel two-col">
@@ -293,20 +371,24 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
           <ol class="top10">${sec.list.map(item=>`<li>${item}</li>`).join('')}</ol>
           <div class="meta">${sec.meta}</div>
         </div>
-        <div class="meta"><span class="tag">Placeholder</span> <span class="tag">Update</span> <span class="tag">Onsite</span></div>
+        <div class="meta"><strong>Status chips:</strong> <span class="k">use any labels you want</span><br>
+          <span style="display:inline-block;margin-top:8px">
+            <span class="btn" style="cursor:default">Placeholder</span>
+            <span class="btn" style="cursor:default">Update</span>
+            <span class="btn" style="cursor:default">Onsite</span>
+          </span>
+        </div>
       </div>`;
     acc.appendChild(d);
   });
 
+  // final stats card (collapsed)
   const pairs = pairBlock(TOP10.finalStats);
-  const statsHTML = pairs.map(p=>`<div class="stat"><div class="knum">${p.value||'-'}</div><div class="lbl">${p.label}</div></div>`).join('');
+  const statsHTML = pairs.map(p=>`<div class="meta" style="display:flex;justify-content:space-between;align-items:center"><span class="k">${p.label}</span><strong>${p.value||'-'}</strong></div>`).join('');
   const fin=document.createElement('details'); fin.id='final';
   fin.innerHTML = `
-    <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats (Top 10)</summary>
-    <div class="panel">
-      <div class="grid-stats">${statsHTML}</div>
-      <div class="meta" style="margin-top:14px">Replace placeholders with final figures above.</div>
-    </div>`;
+    <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats</summary>
+    <div class="panel">${statsHTML}</div>`;
   acc.appendChild(fin);
 })();
 
@@ -325,10 +407,17 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
   }
   window.addEventListener('hashchange', initFromHash);
   initFromHash();
-})();
 
-/*** update last-updated label ***/
-document.getElementById('lastUpdated').textContent = `Last updated: ${LAST_UPDATED}`;
+  // expand/collapse all for current page
+  $('#expandAll').addEventListener('click', ()=>{
+    $(`#${links.find(a=>a.classList.contains('active')).dataset.page}`)
+      .querySelectorAll('details').forEach(d=>d.open=true);
+  });
+  $('#collapseAll').addEventListener('click', ()=>{
+    $(`#${links.find(a=>a.classList.contains('active')).dataset.page}`)
+      .querySelectorAll('details').forEach(d=>d.open=false);
+  });
+})();
 </script>
 </body>
 </html>
