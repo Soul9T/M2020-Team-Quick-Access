@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Money20/20 ME — Team Quick Access</title>
+
+<!-- Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<style>
+  :root{--bg:#0f1115;--card:#171a21;--muted:#8b95a7;--text:#e8ecf3;--accent:#2ea3ff;--border:#232837}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  .wrap{max-width:1120px;margin:36px auto;padding:0 20px}
+  header{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+  h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  .note{color:var(--muted);font-size:13px;margin-top:6px}
+  nav{display:flex;gap:8px;flex-wrap:wrap}
+  nav a{color:var(--muted);text-decoration:none;padding:10px 14px;border:1px solid var(--border);border-radius:12px}
+  nav a.active{color:var(--text);border-color:var(--accent)}
+  /* Sections shown as "pages" */
+  .page{margin-top:18px}
+  .hide{display:none}
+
+  /* Accordions */
+  .accordion{display:grid;gap:14px}
+  details{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  summary{list-style:none;padding:18px 22px;cursor:pointer;display:flex;align-items:center;gap:12px;font-weight:700}
+  summary::-webkit-details-marker{display:none}
+  .chev{flex:0 0 22px;height:22px;border-radius:6px;border:1px solid var(--border);display:grid;place-items:center;transition:transform .18s ease}
+  .chev svg{width:14px;height:14px}
+  details[open] .chev{transform:rotate(90deg)}
+  .panel{padding:0 22px 22px}
+  ul.list{margin:8px 0 0 18px} .list li{padding:8px 0;border-bottom:1px dashed var(--border)} .list li:last-child{border-bottom:none}
+  .k{color:var(--muted);font-size:13px}
+
+  /* Areas table + search */
+  .hero{display:grid;gap:12px;margin:10px 0 12px}
+  .hero img{max-width:360px;width:100%;border-radius:12px;border:1px solid var(--border)}
+  input[type=search]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#12141b;color:var(--text)}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left}
+  th{color:var(--muted);font-weight:600}
+  tr.off{display:none}
+
+  /* Top10s */
+  .two-col{display:grid;gap:16px}
+  @media(min-width:720px){.two-col{grid-template-columns:1.2fr .8fr}}
+  ol.top10{margin:8px 0 0 22px} ol.top10 li{padding:10px 8px;border-bottom:1px dashed var(--border)} ol.top10 li:last-child{border-bottom:none}
+  .meta{margin-top:10px;padding:10px;border:1px solid var(--border);border-radius:12px;background:#12141b;color:var(--muted);font-size:13px}
+  .tag{display:inline-block;padding:2px 8px;border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--muted)}
+  .grid-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(min-width:680px){.grid-stats{grid-template-columns:repeat(4,1fr)}}
+  .stat{background:#12141b;border:1px solid var(--border);border-radius:14px;padding:14px}
+  .stat .knum{font-size:22px;font-weight:700}
+  .stat .lbl{font-size:12px;color:var(--muted)}
+  .footer{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{background:transparent;border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:12px;text-decoration:none}
+  .btn:hover{border-color:var(--accent)}
+  .accent{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Money20/20 Middle East — Team Quick Access</h1>
+      <div class="note">One file • three pages • update via the EDIT BLOCK in the code. <span id="lastUpdated" class="accent"></span></div>
+    </div>
+    <nav id="nav">
+      <a data-page="pocs" class="active" href="#pocs">POCs & Ops</a>
+      <a data-page="areas" href="#areas">Area Map</a>
+      <a data-page="top10s" href="#top10s">Top 10s</a>
+    </nav>
+  </header>
+
+  <!-- POCs & INFO -->
+  <section id="pocs" class="page">
+    <div class="accordion" id="pocsAcc"></div>
+  </section>
+
+  <!-- AREAS -->
+  <section id="areas" class="page hide">
+    <div class="hero">
+      <!-- Replace with your floorplan image if you want -->
+      <img src="map-placeholder.png" alt="Floor plan (placeholder)">
+      <input id="searchAreas" type="search" placeholder="Search for area information..." />
+      <span class="k">Tip: search by feature, hall, or location text.</span>
+    </div>
+
+    <table id="areasTable">
+      <thead><tr><th>AREA/FEATURE</th><th>Hall</th><th>LOCATION</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- TOP 10s -->
+  <section id="top10s" class="page hide">
+    <section class="accordion" id="topAcc"></section>
+    <div class="footer">
+      <a class="btn" href="#top10s#investors">Investors</a>
+      <a class="btn" href="#top10s#speakers">Speakers</a>
+      <a class="btn" href="#top10s#exhibs">Exhibitors</a>
+      <a class="btn" href="#top10s#sponsors">Sponsors</a>
+      <a class="btn" href="#top10s#final">Final Key Stats</a>
+    </div>
+  </section>
+</div>
+
+<!-- ========= EDIT BLOCK (paste your content only here) =================== -->
+<script>
+const LAST_UPDATED = 'DD-MMM-YYYY';
+
+/* Page 1: POCs & Info — paste line-by-line items */
+const POCS = {
+  wifi: `
+WiFi SSID: [Event-SSID] / Password: [password]
+Back-of-house toilets: [Location A], [Location B]
+Staff access door codes: [xxxx] (Ops to update)
+`,
+  timings: `
+Show Open: [Date/Time] → Close: [Date/Time]
+Registration: [Time window]
+Build/Break: [Dates]
+`,
+  stages: `
+Orbital Stage — [Name] — [Role] — [Phone]
+Cosmos Stage — [Name] — [Role] — [Phone]
+Announcement Stage — [Name] — [Role] — [Phone]
+`,
+  ops: `
+[Name] — Venue Ops — [Phone]
+[Name] — Security — [Phone]
+[Name] — Cleaning — [Phone]
+`,
+  protocol: `
+[Name] — Protocol Lead — [Phone]
+[Name] — VIP Transport — [Phone]
+`,
+  marketing: `
+[Name] — Branding/Signage — [Phone]
+[Name] — Social/PR — [Phone]
+`,
+  locations: `
+Merch Store: Hall 3 — “The Garden”
+Info Desk: Hall [#] — [North/South]
+Medical: [Location]
+`
+};
+
+/* Page 2: Areas — one row per line, separated by pipes “|”  (Feature | Hall | Location) */
+const AREAS = `
+AI Tour Desk | 5 | North of Hall 5, next to Info Desk
+Announcement Stage 1 / Private | 3 | Middle-west side of Hall 3
+Announcement Stage 2 / Gov | 4 | Middle-west side of Hall 4
+Boxing Arena (Golden Glove) | 3 | South end, opposite to F&B Area
+Careem / Taxi Point | Outdoor | CP2 Parking – Opp Hall 1 Majlis exit
+Code Stage | 1A | Northwest corner of Hall 1A
+Country Pavilions | 3 | North end of Hall 3A
+Coworking Stations | 6 | West of Hall 6, opposite the Orbital Stage 4
+`;
+
+/* Page 3: Top 10s — paste 10 lines each (free text) */
+const TOP10 = {
+  investors: `
+[Investor 1] — focus / HQ / fund size
+[Investor 2]
+[Investor 3]
+[Investor 4]
+[Investor 5]
+[Investor 6]
+[Investor 7]
+[Investor 8]
+[Investor 9]
+[Investor 10]
+`,
+  speakers: `
+[Speaker 1] — role / company / session
+[Speaker 2]
+[Speaker 3]
+[Speaker 4]
+[Speaker 5]
+[Speaker 6]
+[Speaker 7]
+[Speaker 8]
+[Speaker 9]
+[Speaker 10]
+`,
+  exhibitors: `
+[Exhibitor 1] — booth # / product highlight
+[Exhibitor 2]
+[Exhibitor 3]
+[Exhibitor 4]
+[Exhibitor 5]
+[Exhibitor 6]
+[Exhibitor 7]
+[Exhibitor 8]
+[Exhibitor 9]
+[Exhibitor 10]
+`,
+  sponsors: `
+[Sponsor 1] — tier / key rights
+[Sponsor 2]
+[Sponsor 3]
+[Sponsor 4]
+[Sponsor 5]
+[Sponsor 6]
+[Sponsor 7]
+[Sponsor 8]
+[Sponsor 9]
+[Sponsor 10]
+`,
+  finalStats: `
+Total Attendees: [#]
+International Share: [%]
+Investors: [#]
+Startups: [#]
+Speakers: [#]
+Sessions: [#]
+Countries: [#]
+Media: [#]
+`
+};
+</script>
+<!-- ======================= END EDIT BLOCK =============================== -->
+
+<!-- Logic -->
+<script>
+/*** helpers ***/
+const liBlock  = s => s.trim().split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+const csvBlock = s => s.trim().split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(r=>r.split('|').map(c=>c.trim()));
+const pairBlock= s => s.trim().split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(line=>{const i=line.indexOf(':');return i<0?{label:line,value:''}:{label:line.slice(0,i).trim(), value:line.slice(i+1).trim()}});
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+/*** render POCs ***/
+(function renderPocs(){
+  const sections = [
+    {title:'WiFi & Staff Toilet Access', list: liBlock(POCS.wifi)},
+    {title:'Event Timings',              list: liBlock(POCS.timings)},
+    {title:'Stage Info & POCs',          list: liBlock(POCS.stages)},
+    {title:'Ops POCs',                   list: liBlock(POCS.ops)},
+    {title:'Protocol POCs',              list: liBlock(POCS.protocol)},
+    {title:'Onsite Marketing POCs',      list: liBlock(POCS.marketing)},
+    {title:'Key Locations',              list: liBlock(POCS.locations)}
+  ];
+  const acc = $('#pocsAcc');
+  sections.forEach((s,idx)=>{
+    const d=document.createElement('details'); if(idx===0)d.open=true;
+    d.innerHTML = `
+      <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${s.title}</summary>
+      <div class="panel"><ul class="list">${s.list.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
+    acc.appendChild(d);
+  });
+})();
+
+/*** render Areas ***/
+(function renderAreas(){
+  const tbody = $('#areasTable tbody');
+  csvBlock(AREAS).forEach(cols=>{
+    const [a,b,c] = [cols[0]||'', cols[1]||'', cols[2]||''];
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td>${a}</td><td>${b}</td><td>${c}</td>`;
+    tbody.appendChild(tr);
+  });
+  const rows = $$('#areasTable tbody tr');
+  $('#searchAreas').addEventListener('input', e=>{
+    const term = e.target.value.trim().toLowerCase();
+    rows.forEach(tr=>{
+      tr.classList.toggle('off', !tr.textContent.toLowerCase().includes(term));
+    });
+  });
+})();
+
+/*** render Top10s ***/
+(function renderTop10s(){
+  const sections = [
+    {id:'investors',title:'Top 10 Investors', list: liBlock(TOP10.investors), meta:'Criteria = strategic relevance + stage fit + availability onsite. Source: ISP.'},
+    {id:'speakers', title:'Top 10 Speakers',  list: liBlock(TOP10.speakers),  meta:'Anchor names for PR/marketing. Source: Content.'},
+    {id:'exhibs',   title:'Top 10 Exhibitors',list: liBlock(TOP10.exhibitors),meta:'Curated by innovation / draw power. Source: Sales.'},
+    {id:'sponsors', title:'Top 10 Sponsors',  list: liBlock(TOP10.sponsors),  meta:'Include key rights/activations. Source: Partnerships.'}
+  ];
+  const acc = $('#topAcc');
+  sections.forEach((sec,i)=>{
+    const d=document.createElement('details'); d.id=sec.id; if(i===0)d.open=true;
+    d.innerHTML = `
+      <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${sec.title}</summary>
+      <div class="panel two-col">
+        <div>
+          <ol class="top10">${sec.list.map(item=>`<li>${item}</li>`).join('')}</ol>
+          <div class="meta">${sec.meta}</div>
+        </div>
+        <div class="meta"><span class="tag">Placeholder</span> <span class="tag">Update</span> <span class="tag">Onsite</span></div>
+      </div>`;
+    acc.appendChild(d);
+  });
+
+  const pairs = pairBlock(TOP10.finalStats);
+  const statsHTML = pairs.map(p=>`<div class="stat"><div class="knum">${p.value||'-'}</div><div class="lbl">${p.label}</div></div>`).join('');
+  const fin=document.createElement('details'); fin.id='final';
+  fin.innerHTML = `
+    <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats (Top 10)</summary>
+    <div class="panel">
+      <div class="grid-stats">${statsHTML}</div>
+      <div class="meta" style="margin-top:14px">Replace placeholders with final figures above.</div>
+    </div>`;
+  acc.appendChild(fin);
+})();
+
+/*** tiny router (hash) ***/
+(function router(){
+  const pages = $$('.page');
+  const links = $$('#nav a');
+  function show(id){
+    pages.forEach(p=>p.classList.toggle('hide', p.id!==id));
+    links.forEach(a=>a.classList.toggle('active', a.dataset.page===id));
+  }
+  function initFromHash(){
+    const h = (location.hash||'#pocs').replace('#','');
+    const id = ['pocs','areas','top10s'].includes(h) ? h : 'pocs';
+    show(id);
+  }
+  window.addEventListener('hashchange', initFromHash);
+  initFromHash();
+})();
+
+/*** update last-updated label ***/
+document.getElementById('lastUpdated').textContent = `Last updated: ${LAST_UPDATED}`;
+</script>
+</body>
+</html>
