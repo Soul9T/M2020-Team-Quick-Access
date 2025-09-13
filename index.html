@@ -206,75 +206,74 @@ SAMA & CMA Roundtables — Tom
 `,
   /* Ops in responsibility → names format */
   ops: `
-Space-only Stands — Mubash / Mina
-Shell Scheme / Pods — Jerome / Mellisa
-Traffic / Parking — Iyad / Jal
-Golf Cars / Shuttles / Valet — Iyad / Sattam
-Meeting Rooms (Hall 2) — Walaa
-Power & Rigging for Features — Rami
-Money20/20 Stages & Features — Parvana
 Catering — Bushra
 Cleaning — Abdulrahman
 F&B Areas ×3 — Ayad / Jal
+Furniture — Abdulrahman
+Golf Cars / Shuttles / Valet — Iyad / Sattam
+Internet — Rami
+Meeting Rooms (Hall 2) — Walaa
+Money20/20 Stages & Features — Parvana
+Power & Rigging for Features — Rami
 Registration — Bushra
 Security — Rami / Mubash
-Furniture — Abdulrahman
+Shell Scheme / Pods — Jerome / Mellisa
+Space-only Stands — Mubash / Mina
+Traffic / Parking — Iyad / Jal
 Ushers / Crowd Management — Bushra
-Wayfinding / Signage / Branding — Jad
-Internet — Rami
-Water / Power / Other Stations — Walaa
 Venue Management — Rami
+Water / Power / Other Stations — Walaa
+Wayfinding / Signage / Branding — Jad
 `,
   /* Marketing: responsibility FIRST, then person */
   marketing: `
+Design — Carlo
+Design — Mary Eser
+Interview Investor — Showmaker Lulu
 Interview Speaker — Reema Sperring
 Interview Speaker — Roula
 Interview SPEX — Lily Martin
 Interview SPEX — Tilly Richards
-Interview Investor — Showmaker Lulu
 Interview Startup — Aida Daghistani
+Media Team — Hazim
+Media Team — Kitty Draper
+Media Team — Mark Cheng
+Onsite (Other event) — Rabia Jaffer
+Onsite Social (Other event) — Matthew Mangulabnan
 Onsite Social (Pictures) — AJ
-Onsite Social — Owais Tambe
-Onsite Social — Leon Beck
-Onsite Social — Showmaker Owais
-Onsite Social — Leyan Malki
-Onsite Social (Pictures) — Tala Bahri
 Onsite Social (Pictures) — Bissan
 Onsite Social (Pictures) — Potential grads
-Onsite Social (Other event) — Matthew Mangulabnan
-Onsite (Other event) — Rabia Jaffer
-Media Team — Hazim
-Media Team — Mark Cheng
-VIP Management — Hugh Pettit
-VIP Management — Dorian Bennett
-Reg Stats — Dorian Bennett
-Design — Carlo
-Design — Mary Eser
+Onsite Social (Pictures) — Tala Bahri
+Onsite Social — Leon Beck
+Onsite Social — Leyan Malki
+Onsite Social — Owais Tambe
+Onsite Social — Showmaker Owais
+Oversight, Support & Approval — Alex Tomlinson
+Oversight, Support & Approval — Kitty Draper
 PR — Douglas Keighley
 PR — Lama (PR Exec)
-Oversight, Support & Approval — Kitty Draper
-Media Team — Kitty Draper
-Reg Stats — Kitty Draper
-Oversight, Support & Approval — Alex Tomlinson
 Reg Stats — Alex Tomlinson
+Reg Stats — Dorian Bennett
 Reg Stats — Kashaan
+Reg Stats — Kitty Draper
+VIP Management — Dorian Bennett
+VIP Management — Hugh Pettit
 `,
   /* Protocol: responsibility FIRST, then person */
   protocol: `
+Cleaning Support — Faisal Aljaber
 Escalation (urgent) — Abdulaziz Alghurayr (“Aziz”)
 Government & Protocol Support — Abdulla Almugait
-Cleaning Support — Faisal Aljaber
-Traffic Support — Abdullah Alomari (A1)
-Government Catering & Crowd Support — Saeed Alkatheri ("Happy")
-VIP Tours — Abdullah Aloraini (Amsterdam)
-Government & Protocol Support — Heyam Alshammari
 Government & Protocol Support — Fatimah Alasmari
-Aziz Assistant — Rawan Albagami
+Government & Protocol Support — Heyam Alshammari
+Government Catering & Crowd Support — Saeed Alkatheri ("Happy")
+Traffic Support — Abdullah Alomari (A1)
+VIP Tours — Abdullah Aloraini (Amsterdam)
 `,
   locations: `
-Merch Store — Hall 3 (The Garden)
-Info Desk — Hall [#] (North/South)
+Info Desk — Hall [2] (Main enterance)
 Medical — see “Critical Info”
+Merch Store — Hall 3 (The Garden)
 `
 };
 
@@ -282,16 +281,11 @@ Medical — see “Critical Info”
 const AREAS_DATA = [
 {"feature":"CP2 Tent - Registration","hall":"Outdoor (Hall 1)","location":"Outside of the 1st entrance of Hall 1"},
 {"feature":"CP3 Tent - Registration","hall":"Outdoor (Hall 1)","location":"Outside of the 2nd entrance of Hall 1"},
-{"feature":"GOLD PASS, STANDARD PASS, VIP NETWORKING PASS, SPEAKER, INVESTOR SPEAKER, INVESTOR","hall":"Outdoor (Hall 1)","location":"At the VIP entrance of Hall 1 - Outside of the VIP Majlis"},
 {"feature":"Registration Counters - Hall 1","hall":"1","location":"Inside Hall 1 — Registration counters"},
 {"feature":"VIP/Majlis 1","hall":"1","location":"At the VIP entrance of Hall 1"},
 {"feature":"Paramedic Desk No. 1","hall":"1","location":"Next to The Majlis in Hall 1"},
 {"feature":"Info Desk No. 8","hall":"1","location":"At Hall 1, next to VIP Majlis"},
-{"feature":"Activation 1 - Hall 1","hall":"1","location":"Next to the VIP Majlis 1"},
-{"feature":"Activation 2 - Hall 1","hall":"1","location":"Between Off The Record Stage & AMEX Lounge"},
-{"feature":"Activation 3 - Hall 1","hall":"1","location":"Center of Hall 1 — west side"},
 {"feature":"Off The Record Stage","hall":"1","location":"At the end of Hall 1 — next to AMEX Lounge"},
-{"feature":"Visa Lounge","hall":"1","location":"End of Hall 1 — near Off The Record Stage"},
 {"feature":"AMEX Lounge","hall":"1","location":"Next to Off The Record Stage"},
 {"feature":"Money Runner","hall":"1","location":"End of Hall 1 — west side"},
 {"feature":"Info Desk No. 7","hall":"1","location":"Hall 1 entrance from Hall 3"},
@@ -299,54 +293,26 @@ const AREAS_DATA = [
 {"feature":"VIP/Majlis 2","hall":"2","location":"Next to the VIP entrance of Hall 2"},
 {"feature":"Paramedic Desk No. 2","hall":"2","location":"Center of the hall between Hall 2 & 2A"},
 {"feature":"Custom Kicks","hall":"2","location":"Center of Hall 2 — east side"},
-{"feature":"Car Painting","hall":"2","location":"Center of Hall 2 — east side"},
-{"feature":"AISCRAFT Arena","hall":"2","location":"Entrance of Hall 2 from Hall 1 — west side"},
-{"feature":"Camel Race","hall":"2","location":"Entrance of Hall 2 from Hall 1 — east side"},
-{"feature":"Boxing Arena (Golden Glove)","hall":"2","location":"Entrance of Hall 2 from Hall 1 — west side"},
-{"feature":"Safari VR","hall":"2","location":"Entrance of Hall 2 from Hall 1 — west side"},
-{"feature":"FIFA eSports","hall":"2","location":"Entrance of Hall 2 from Hall 1 — west side"},
-{"feature":"Steam Racing","hall":"2","location":"Center of Hall 2 — west side"},
-{"feature":"Xtreme Zone","hall":"2","location":"Center of Hall 2 — west side"},
-{"feature":"Finhack Arena","hall":"2","location":"Center of Hall 2 — east side"},
-{"feature":"e& money Stage","hall":"2","location":"End of Hall 2 — east side"},
-{"feature":"Start-up/Scale-up Podium","hall":"2","location":"Center of Hall 2 — west side"},
-{"feature":"AISCRAFT Registration","hall":"2","location":"Entrance of Hall 2 from Hall 1 — west side"},
 {"feature":"Info Desk No. 3","hall":"2","location":"Entrance of Hall 2 from Hall 1"},
-{"feature":"Riyadh ATM","hall":"2","location":"Entrance of Hall 2 from Hall 1 — right side"},
 {"feature":"Money Lounge","hall":"2","location":"Next to Green Room & Executive Floor"},
 {"feature":"The Garden","hall":"2","location":"Center of Hall 2 — near AMEX Lounge"},
-{"feature":"Garden Stage","hall":"2","location":"Center of Hall 2 — The Garden"},
 {"feature":"The Runway","hall":"2","location":"Center of Hall 2 — between e& money Stage & Garden Stage"},
 {"feature":"Green Room","hall":"2","location":"Back of Hall 2 — both sides"},
-{"feature":"Executive Floor","hall":"2","location":"Back of Hall 2 — from Green Room"},
-{"feature":"AISCRAFT Control room","hall":"2","location":"Back of Hall 2"},
-{"feature":"Code Stage","hall":"2A","location":"NW corner of Hall 2A — near Meeting Rooms 1–8"},
-{"feature":"The Bridge Stage","hall":"2A","location":"End of Hall 2A — west side"},
-{"feature":"The Briefing Stage","hall":"2A","location":"Start of Hall 2A — next to The Garden"},
-{"feature":"Startup Village","hall":"2A","location":"Center of Hall 2A"},
-{"feature":"F&B3","hall":"2A","location":"Center of Hall 2A — next to The Briefing Stage"},
-{"feature":"F&B2","hall":"2A","location":"Center of Hall 2A — next to The Bridge Stage"},
-{"feature":"F&B1","hall":"2A","location":"Center of Hall 2A — next to The Bridge Stage"},
-{"feature":"Catering — Tahaluf Staff only (G-144)","hall":"2A","location":"North side of Hall 2A — next to The Briefing Stage"},
-{"feature":"Info Desk No. 4","hall":"2A","location":"West end of Hall 2A"},
+{"feature":"The Bridge Stage","hall":"2","location":"End of Hall 2 dogleg area"},
+{"feature":"The Briefing Stage","hall":"2","location":"End of Hall 2 dogleg — next to The Garden"},
+{"feature":"Startup Village","hall":"2","location":"Center of Hall 2A"},
+{"feature":"F&B3","hall":"2","location":"Center of Hall 2 — next to The Briefing Stage"},
+{"feature":"F&B2","hall":"2","location":"Center of Hall 2 — next to The Bridge Stage"},
+{"feature":"F&B1","hall":"2","location":"Center of Hall 2 — next to The Bridge Stage"},
+{"feature":"Catering — Tahaluf Staff only (G-144)","hall":"2","location":"North side of Hall 2 — next to The Briefing Stage"},
+{"feature":"Info Desk No. 4","hall":"2","location":"West end of Hall 2"},
 {"feature":"MoneyPot Stage","hall":"3","location":"Center of Hall 3"},
-{"feature":"Global Exhibition Area","hall":"3","location":"Center of Hall 3 — corner"},
-{"feature":"Garden Stage","hall":"3","location":"Center of Hall 3 — near The Garden"},
 {"feature":"The Pulse Stage","hall":"3","location":"Center of Hall 3 — west side"},
-{"feature":"Food Court","hall":"3","location":"Entrance of Hall 3 from Hall 1"},
-{"feature":"Money Runner","hall":"3","location":"Center of Hall 3"},
+{"feature":"Food Court","hall":"3","location":"End of Hall 1 left corner - after Off the record stage"},
 {"feature":"Prayer Room (Male/Female)","hall":"3","location":"Corner of Hall 3 — Hall 1 side"},
-{"feature":"Main Entrance from Hall 1","hall":"3","location":"First area, on the right of Hall 3"},
 {"feature":"Media Registration","hall":"3","location":"North half of Hall 3"},
-{"feature":"Riyadh ATM","hall":"3","location":"Middle of Hall 3 between Custom Kicks & Media Registration"},
-{"feature":"Activation 1","hall":"3","location":"Main entrance from Hall 1"},
-{"feature":"Activation 2","hall":"3","location":"Entrance of Hall 3 from Hall 1 — corner"},
-{"feature":"Activation 3","hall":"3","location":"First area on the right from the entrance"},
-{"feature":"Activation 4","hall":"3","location":"Center of Hall 3"},
-{"feature":"Activation 5","hall":"3","location":"Center of Hall 3"},
-{"feature":"Activation 6 — Insta Moments","hall":"3","location":"Next to MoneyPot"},
 {"feature":"Media Lounge","hall":"3","location":"Next to The Pulse Stage — west side"},
-{"feature":"Sales Lounge — Money20/20 Global","hall":"3","location":"Center of Hall 3 — next to The Runway"},
+{"feature":"Sales Lounge","hall":"3","location":"Center of Hall 3 — next to The Runway"},
 {"feature":"Giant Duck","hall":"3","location":"Center of The Garden — Hall 3"},
 {"feature":"Connexion Lounge","hall":"1","location":"Level 1 of Hall1 Majlis"},
 {"feature":"Merch Shop","hall":"3","location":"Hall 3 — left side inside The Garden"}
