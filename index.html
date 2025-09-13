@@ -26,7 +26,7 @@
   }
   .wrap{max-width:1120px;margin:34px auto;padding:0 20px}
   header{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
-  h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  h1{margin:0;font-size:clamp(22px,3.4vw,32px)}
   .accent{background:linear-gradient(90deg,var(--teal1),var(--teal2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .note{color:var(--muted);font-size:13px;margin-top:6px}
 
@@ -58,8 +58,8 @@
   ul.list{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:10px}
   .row{display:flex;align-items:flex-start;gap:10px;border:1px dashed var(--border);border-radius:12px;padding:10px 12px;background:#0f141e}
   .label{font-weight:800;letter-spacing:.2px}
-  .vals{display:flex;flex-wrap:wrap;gap:8px}
-  .pill{background:#121a28;border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:13px}
+  .vals{display:flex;flex-wrap:wrap;gap:6px}
+  .pill{background:#121a28;border:1px solid var(--border);border-radius:999px;padding:3px 9px;font-size:13px}
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
   .chip{margin-left:auto;font-size:12px;border:1px solid var(--border);padding:3px 8px;border-radius:999px;cursor:pointer;background:#10131b;color:#dfe6ee}
   .chip.good{border-color:#12d3b1;color:#111;background:#12d3b1}
@@ -91,6 +91,30 @@
   .span-2{grid-column:span 2}.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-5{grid-column:span 5}
   @media(max-width:740px){.stats-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:100px}
     .span-5{grid-column:span 3}.span-4{grid-column:span 3}.span-3{grid-column:span 3}.span-2{grid-column:span 3}}
+
+  /* --- Mobile tuning: smaller, tighter --- */
+  @media (max-width: 540px) {
+    html { font-size: 13.5px; }           /* base smaller */
+    h1 { font-size: 20px; }
+    .note { font-size: 11.5px; }
+
+    nav a { padding: 6px 10px; font-size: 12.5px; }
+
+    summary { padding: 12px 14px; font-size: 14px; }
+    .panel  { padding: 0 14px 12px; }
+
+    .list { gap: 6px; }
+    .row  { padding: 7px 9px; gap: 6px; }
+    .label{ font-weight: 700; }
+    .pill  { font-size: 10.5px; padding: 2px 7px; }
+
+    .search-big { font-size: 15px; padding: 12px 14px; }
+    table th, table td { font-size: 12.5px; padding: 9px; }
+  }
+  @media (max-width: 380px) {
+    html { font-size: 12.5px; }
+    .pill { font-size: 10px; }
+  }
 </style>
 </head>
 <body>
@@ -121,7 +145,6 @@
   <!-- AREAS -->
   <section id="areas" class="page hide">
     <div class="hero">
-      <!-- search first & bigger -->
       <input id="searchAreas" class="search-big" type="search" placeholder="Search areas, halls, locations…" />
       <img id="planThumb" class="plan" src="Floorplan.png" alt="Money20/20 Middle East — Floorplan overview" />
       <span class="note">Tap map to zoom. Results below are A→Z.</span>
@@ -145,7 +168,7 @@
 
 <!-- ================== CONTENT (edit here) ================= -->
 <script>
-/* POCs & Info (now formatted for nicer rendering) */
+/* POCs & Info (formatted for nicer rendering) */
 const POCS = {
   /* Wi-Fi rendered as bold key → value rows (copyable password) */
   wifi: `
@@ -158,7 +181,7 @@ How to enter the code: Press 1, then OK, then enter the code
 `,
   /* Each location on its own line */
   critical: `
-Emergency (Medical room) — Hall 2: back of house (behind main stage)
+Emergency (Paramedic rooms) — Hall 2: back of house (behind main stage)
 Emergency (Paramedic rooms) — Hall 2: dogleg behind The Garden
 Emergency (Paramedic rooms) — Hall 1: next to the Majlis
 Emergency (Paramedic rooms) — Hall 3: behind Custom Kicks
@@ -181,7 +204,7 @@ MoneyPot Stage — Elizabeth
 CMA & MOF Workshop — Tom
 SAMA & CMA Roundtables — Tom
 `,
-  /* Ops already in responsibility → names format */
+  /* Ops in responsibility → names format */
   ops: `
 Space-only Stands — Mubash / Mina
 Shell Scheme / Pods — Jerome / Mellisa
@@ -255,7 +278,7 @@ Medical — see “Critical Info”
 `
 };
 
-/* Areas data (unchanged list, toilets will be filtered out & A→Z sorted) */
+/* Areas data (unchanged list, toilets filtered out & A→Z sorted) */
 const AREAS_DATA = [
 {"feature":"CP2 Tent - Registration","hall":"Outdoor (Hall 1)","location":"Outside of the 1st entrance of Hall 1"},
 {"feature":"CP3 Tent - Registration","hall":"Outdoor (Hall 1)","location":"Outside of the 2nd entrance of Hall 1"},
@@ -292,6 +315,7 @@ const AREAS_DATA = [
 {"feature":"Riyadh ATM","hall":"2","location":"Entrance of Hall 2 from Hall 1 — right side"},
 {"feature":"Money Lounge","hall":"2","location":"Next to Green Room & Executive Floor"},
 {"feature":"The Garden","hall":"2","location":"Center of Hall 2 — near AMEX Lounge"},
+{"feature":"AMEX Lounge","hall":"2","location":"Near The Garden"},
 {"feature":"Garden Stage","hall":"2","location":"Center of Hall 2 — The Garden"},
 {"feature":"The Runway","hall":"2","location":"Center of Hall 2 — between e& money Stage & Garden Stage"},
 {"feature":"Green Room","hall":"2","location":"Back of Hall 2 — both sides"},
@@ -325,7 +349,6 @@ const AREAS_DATA = [
 {"feature":"Media Lounge","hall":"3","location":"Next to The Pulse Stage — west side"},
 {"feature":"Sales Lounge — Money20/20 Global","hall":"3","location":"Center of Hall 3 — next to The Runway"},
 {"feature":"Giant Duck","hall":"3","location":"Center of The Garden — Hall 3"},
-{"feature":"Connexion Lounge","hall":"1","location":"Level 1 of Hall1 Majlis"},
 {"feature":"Merch Shop","hall":"3","location":"Hall 3 — left side inside The Garden"}
 ];
 
@@ -404,8 +427,8 @@ const pairs = s => li(s).map(line=>{
   return {k:'', v:line, kind:'raw'};
 });
 
-/* Render a pretty list: kv (bold label), role (label + name pills), raw */
-function prettyList(block, {copyPhones=false, copyPasswords=false}={}){
+/* Pretty list renderer */
+function prettyList(block, {copyPasswords=false}={}){
   const items = pairs(block).map(obj=>{
     let label = obj.k ? `<span class="label">${obj.k}</span>` : '';
     let vals  = '';
@@ -414,14 +437,8 @@ function prettyList(block, {copyPhones=false, copyPasswords=false}={}){
       vals = `<span class="vals"><span class="mono">${obj.v}</span></span>` +
              (isPass && copyPasswords ? ` <span class="chip" data-copy="${obj.v}">Copy password</span>` : '');
     } else if(obj.kind === 'role'){
-      // split multiple names or details into pills; if no separators, show as text
       const parts = obj.v.split(/\/|,|;| & | and /i).map(s=>s.trim()).filter(Boolean);
-      if(parts.length>1 || /^[A-Za-z]/.test(obj.v)) {
-        vals = `<span class="vals">` + parts.map(p=>`<span class="pill">${p}</span>`).join('') + `</span>`;
-      } else {
-        vals = `<span class="vals"><span>${obj.v}</span></span>`;
-      }
-      label = `<span class="label">${obj.k}</span>`;
+      vals = `<span class="vals">` + (parts.length?parts:[obj.v]).map(p=>`<span class="pill">${p}</span>`).join('') + `</span>`;
     } else {
       vals = `<span>${obj.v}</span>`;
     }
@@ -433,7 +450,7 @@ function prettyList(block, {copyPhones=false, copyPasswords=false}={}){
 /* ---------- POCs ---------- */
 (function(){
   const sections = [
-    {title:'Wi-Fi & Codes',          html: prettyList(POCS.wifi,     {copyPasswords:true}), danger:false},
+    {title:'Wi-Fi & Codes',          html: prettyList(POCS.wifi,     {copyPasswords:true})},
     {title:'Critical Info',          html: prettyList(POCS.critical), danger:true},
     {title:'Show Timings',           html: prettyList(POCS.timings)},
     {title:'Stage Info & POCs',      html: prettyList(POCS.stages)},
@@ -450,8 +467,6 @@ function prettyList(block, {copyPhones=false, copyPasswords=false}={}){
       <div class="panel">${sec.html}</div>`;
     acc.appendChild(d);
   });
-
-  // copy chip (password)
   acc.addEventListener('click', e=>{
     const btn = e.target.closest('.chip'); if(!btn) return;
     const val = btn.getAttribute('data-copy'); if(!val) return;
@@ -462,7 +477,7 @@ function prettyList(block, {copyPhones=false, copyPasswords=false}={}){
   });
 })();
 
-/* ---------- Areas (hide toilets, sort A→Z, bigger search on top) ---------- */
+/* ---------- Areas (hide toilets, sort A→Z, bigger search) ---------- */
 (function(){
   const skipRe=/toilet|restroom/i;
   const items = AREAS_DATA
@@ -519,13 +534,12 @@ function prettyList(block, {copyPhones=false, copyPasswords=false}={}){
   function show(id){
     pages.forEach(p=>p.classList.toggle('hide', p.id!==id));
     links.forEach(a=>a.classList.toggle('active', a.dataset.page===id));
-    // Hide toolbar on Areas page
     toolbar.style.display = (id==='areas') ? 'none' : 'flex';
   }
   function init(){ const h=(location.hash||'#pocs').replace('#',''); show(['pocs','areas','top10s'].includes(h)?h:'pocs'); }
   window.addEventListener('hashchange', init); init();
 
-  // expand/collapse only for pages that use accordions
+  // expand/collapse only where useful
   const getActive=()=> (links.find(a=>a.classList.contains('active'))||links[0]).dataset.page;
   $('#expandAll').addEventListener('click',()=>{ $(`#${getActive()}`).querySelectorAll('details').forEach(d=>d.open=true); });
   $('#collapseAll').addEventListener('click',()=>{ $(`#${getActive()}`).querySelectorAll('details').forEach(d=>d.open=false); });
