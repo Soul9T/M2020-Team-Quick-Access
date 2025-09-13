@@ -22,7 +22,6 @@
     --gold:#c9a84c;
     --border:#222739;
     --danger:#ff5257;
-    --danger2:#ff7b66;
     --ring:0 0 0 2px rgba(40,214,178,.25),0 0 24px rgba(201,168,76,.16);
   }
 
@@ -30,11 +29,13 @@
   body{
     margin:0;
     font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    color:var(--text);
+    color:var(--text,#f5f7fa);
+    background-color:#0b0b0d;
     background:
       radial-gradient(1200px 640px at 80% -10%, rgba(14,192,167,.18), transparent 55%),
       radial-gradient(1000px 700px at -10% 110%, rgba(201,168,76,.12), transparent 60%),
-      linear-gradient(180deg, var(--bg), var(--bg2));
+      linear-gradient(180deg, var(--bg,#0b0b0d), var(--bg2,#0f1116));
+    min-height:100vh;
   }
 
   .wrap{max-width:1120px;margin:34px auto;padding:0 20px}
@@ -113,9 +114,9 @@
   .chip:hover{box-shadow:var(--ring)}
   .chip.good{border-color:#12d3b1;color:#111;background:#12d3b1}
 
-  /* Areas table + search */
+  /* Areas page */
   .hero{display:grid;gap:12px;margin:10px 0 12px}
-  .svgph{width:360px;max-width:100%;border-radius:12px;border:1px solid var(--border)}
+  .plan{width:100%;max-width:100%;border-radius:12px;border:1px solid var(--border)}
   input[type=search]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);
     background:#11151e;color:#f2f5f9;transition:box-shadow .2s ease}
   input[type=search]:focus{outline:none;box-shadow:var(--ring)}
@@ -123,6 +124,11 @@
   th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left}
   th{color:var(--muted);font-weight:600}
   tr.off{display:none}
+
+  /* Lightbox for the floorplan */
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:9999}
+  .lightbox.show{display:flex}
+  .lightbox img{max-width:95vw;max-height:90vh;border-radius:12px;border:1px solid #2a2f40;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 
   /* Top10s */
   .two-col{display:grid;gap:16px}
@@ -153,9 +159,7 @@
   .span-3{grid-column:span 3}
   .span-4{grid-column:span 4}
   .span-5{grid-column:span 5}
-  @media(max-width:900px){
-    .span-5{grid-column:span 4}
-  }
+  @media(max-width:900px){.span-5{grid-column:span 4}}
   @media(max-width:740px){
     .stats-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:100px}
     .span-5{grid-column:span 3}.span-4{grid-column:span 3}.span-3{grid-column:span 3}.span-2{grid-column:span 3}
@@ -200,22 +204,10 @@
   <!-- AREAS -->
   <section id="areas" class="page hide">
     <div class="hero">
-      <!-- Inline SVG floorplan placeholder -->
-      <svg class="svgph" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map placeholder">
-        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#1f2431"/><stop offset="1" stop-color="#12141b"/></linearGradient></defs>
-        <rect width="800" height="500" fill="url(#g)"/>
-        <g fill="#12d3b1" opacity=".33">
-          <rect x="50" y="60" width="140" height="80" rx="8"/>
-          <rect x="220" y="60" width="200" height="120" rx="8"/>
-          <rect x="50" y="170" width="180" height="100" rx="8"/>
-          <rect x="260" y="210" width="200" height="140" rx="8"/>
-          <rect x="500" y="80" width="240" height="180" rx="8"/>
-          <rect x="520" y="290" width="220" height="120" rx="8"/>
-        </g>
-        <text x="400" y="255" text-anchor="middle" fill="#9aa4b2" font-size="26" font-family="Inter,Arial,sans-serif">Floor Plan Placeholder</text>
-      </svg>
+      <!-- Upload Floorplan.png next to index.html -->
+      <img id="planThumb" class="plan" src="Floorplan.png" alt="Money20/20 Middle East — Floorplan overview" />
       <input id="searchAreas" type="search" placeholder="Search for area information..." />
-      <span class="k">Tip: search by feature, hall, or location text.</span>
+      <span class="k">Tip: search by feature, hall, or location text. Click the map to zoom.</span>
     </div>
     <table id="areasTable">
       <thead><tr><th>AREA/FEATURE</th><th>Hall</th><th>LOCATION</th></tr></thead>
@@ -227,6 +219,11 @@
   <section id="top10s" class="page hide">
     <section class="accordion" id="topAcc"></section>
   </section>
+</div>
+
+<!-- Lightbox viewer -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <img id="lightboxImg" src="Floorplan.png" alt="Floorplan enlarged" />
 </div>
 
 <!-- ================== EDIT BLOCK (paste your content here) ================= -->
@@ -279,8 +276,7 @@ Medical: [Location]
 `
 };
 
-/* ========== Page 2: Areas — embedded from your Excel (cleaned) ========== */
-/* Format: {feature, hall, location} — spelling/phrasing normalized; no guesses added. */
+/* ========== Page 2: Areas — embedded (cleaned) ========== */
 const AREAS_DATA = [
 {"feature":"CP2 Tent - Registration","hall":"Outdoor (Hall 1)","location":"Outside of the 1st entrance of Hall 1"},
 {"feature":"CP3 Tent - Registration","hall":"Outdoor (Hall 1)","location":"Outside of the 2nd entrance of Hall 1"},
@@ -384,7 +380,7 @@ const AREAS_DATA = [
 {"feature":"Merch Shop","hall":"3","location":"At Hall 3 - on the left side inside The Garden"}
 ];
 
-/* ========== Page 3: Top 10s (unchanged from your last message) ========== */
+/* ========== Page 3: Top 10s ========== */
 const TOP10 = {
   investors: `
 Goldman Sachs
@@ -458,124 +454,137 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
 
 /*** POCs (collapsed) + Critical Info (red) + copy chips ***/
 (function renderPocs(){
-  const sections = [
-    {title:'Wi-Fi & Staff Toilet Access', list: liBlock(POCS.wifi), danger:false},
-    {title:'Critical Info (Emergency / Duty)', list: liBlock(POCS.critical), danger:true},
-    {title:'Event Timings',              list: liBlock(POCS.timings)},
-    {title:'Stage Info & POCs',          list: liBlock(POCS.stages)},
-    {title:'Ops POCs',                   list: liBlock(POCS.ops)},
-    {title:'Protocol POCs',              list: liBlock(POCS.protocol)},
-    {title:'Onsite Marketing POCs',      list: liBlock(POCS.marketing)},
-    {title:'Key Locations',              list: liBlock(POCS.locations)}
-  ];
-  const acc = $('#pocsAcc');
+  try{
+    const sections = [
+      {title:'Wi-Fi & Staff Toilet Access', list: liBlock(POCS.wifi), danger:false},
+      {title:'Critical Info (Emergency / Duty)', list: liBlock(POCS.critical), danger:true},
+      {title:'Event Timings',              list: liBlock(POCS.timings)},
+      {title:'Stage Info & POCs',          list: liBlock(POCS.stages)},
+      {title:'Ops POCs',                   list: liBlock(POCS.ops)},
+      {title:'Protocol POCs',              list: liBlock(POCS.protocol)},
+      {title:'Onsite Marketing POCs',      list: liBlock(POCS.marketing)},
+      {title:'Key Locations',              list: liBlock(POCS.locations)}
+    ];
+    const acc = $('#pocsAcc');
 
-  sections.forEach((s)=>{
-    const d=document.createElement('details');
-    if(s.danger) d.classList.add('danger');
-    const items = s.list.map(txt=>{
-      const pw = /password:\s*([^\n]+)/i.exec(txt);
-      const phAll = txt.match(/(\+?\d[\d\s\-\(\)]{6,}\d)/g) || [];
-      let chipHTML = '';
-      if(pw){ chipHTML += `<span class="chip" data-copy="${pw[1].trim()}">Copy password</span>`; }
-      else if(phAll.length){
-        chipHTML += `<span class="chip" data-copy="${phAll[0].replace(/\s+/g,' ').trim()}">Copy phone</span>`;
-      }
-      return `<li><span>${txt}</span>${chipHTML}</li>`;
-    }).join('');
+    sections.forEach((s)=>{
+      const d=document.createElement('details');
+      if(s.danger) d.classList.add('danger');
+      const items = s.list.map(txt=>{
+        const pw = /password:\s*([^\n]+)/i.exec(txt);
+        const phAll = txt.match(/(\+?\d[\d\s\-\(\)]{6,}\d)/g) || [];
+        let chipHTML = '';
+        if(pw){ chipHTML += `<span class="chip" data-copy="${pw[1].trim()}">Copy password</span>`; }
+        else if(phAll.length){
+          chipHTML += `<span class="chip" data-copy="${phAll[0].replace(/\s+/g,' ').trim()}">Copy phone</span>`;
+        }
+        return `<li><span>${txt}</span>${chipHTML}</li>`;
+      }).join('');
 
-    d.innerHTML = `
-      <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${s.title}</summary>
-      <div class="panel"><ul class="list">${items}</ul></div>`;
-    acc.appendChild(d);
-  });
+      d.innerHTML = `
+        <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${s.title}</summary>
+        <div class="panel"><ul class="list">${items}</ul></div>`;
+      acc.appendChild(d);
+    });
 
-  acc.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.chip');
-    if(!btn) return;
-    const val = btn.getAttribute('data-copy');
-    if(!val) return;
-    navigator.clipboard.writeText(val).then(()=>{
-      const old = btn.textContent;
-      btn.textContent = 'Copied!';
-      btn.classList.add('good');
-      setTimeout(()=>{ btn.textContent = old; btn.classList.remove('good'); }, 1200);
-    }).catch(()=>{ btn.textContent = 'Copy failed'; });
-  });
+    acc.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.chip');
+      if(!btn) return;
+      const val = btn.getAttribute('data-copy');
+      if(!val) return;
+      navigator.clipboard.writeText(val).then(()=>{
+        const old = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('good');
+        setTimeout(()=>{ btn.textContent = old; btn.classList.remove('good'); }, 1200);
+      }).catch(()=>{ btn.textContent = 'Copy failed'; });
+    });
+  } catch(e){ console.error('POCs render error', e); }
 })();
 
-/*** AREAS — uses AREAS_DATA (from your Excel) ***/
+/*** AREAS — uses AREAS_DATA + floorplan lightbox ***/
 (function renderAreas(){
-  const tbody = $('#areasTable tbody');
-  function addRow(feature,hall,location){
-    const tr = document.createElement('tr');
-    const td1 = document.createElement('td'); td1.textContent = feature || '';
-    const td2 = document.createElement('td'); td2.textContent = hall || '';
-    const td3 = document.createElement('td'); td3.textContent = location || '';
-    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
-    tbody.appendChild(tr);
-  }
-  if (Array.isArray(AREAS_DATA) && AREAS_DATA.length){
-    AREAS_DATA.forEach(r => addRow(r.feature, r.hall, r.location));
-  }
+  try{
+    const tbody = $('#areasTable tbody');
+    function addRow(feature,hall,location){
+      const tr = document.createElement('tr');
+      const td1 = document.createElement('td'); td1.textContent = feature || '';
+      const td2 = document.createElement('td'); td2.textContent = hall || '';
+      const td3 = document.createElement('td'); td3.textContent = location || '';
+      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+      tbody.appendChild(tr);
+    }
+    if (Array.isArray(AREAS_DATA) && AREAS_DATA.length){
+      AREAS_DATA.forEach(r => addRow(r.feature, r.hall, r.location));
+    }
+    const rows = $$('#areasTable tbody tr');
+    $('#searchAreas').addEventListener('input', e=>{
+      const term = e.target.value.trim().toLowerCase();
+      rows.forEach(tr=>{ tr.classList.toggle('off', !tr.textContent.toLowerCase().includes(term)); });
+    });
 
-  const rows = $$('#areasTable tbody tr');
-  $('#searchAreas').addEventListener('input', e=>{
-    const term = e.target.value.trim().toLowerCase();
-    rows.forEach(tr=>{ tr.classList.toggle('off', !tr.textContent.toLowerCase().includes(term)); });
-  });
+    // Lightbox handlers
+    const lb = $('#lightbox');
+    const lbImg = $('#lightboxImg');
+    $('#planThumb').addEventListener('click', ()=>{ lb.classList.add('show'); lb.setAttribute('aria-hidden','false'); });
+    lb.addEventListener('click', ()=>{ lb.classList.remove('show'); lb.setAttribute('aria-hidden','true'); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') { lb.classList.remove('show'); lb.setAttribute('aria-hidden','true'); }});
+
+  } catch(e){ console.error('Areas render error', e); }
 })();
 
 /*** TOP 10s (collapsed) + key stats mosaic (2 rows) ***/
 (function renderTop10s(){
-  const sections = [
-    {id:'investors',title:'Top 10 Investment Firms', list: liBlock(TOP10.investors), meta:'Criteria = AUM + relevance + presence. Source: ISP.'},
-    {id:'speakers', title:'Top 10 Speakers',  list: liBlock(TOP10.speakers),  meta:'Anchor names for PR/marketing. Source: Content.'},
-    {id:'exhibs',   title:'Top 10 Exhibitors',list: liBlock(TOP10.exhibitors),meta:'Curated by innovation / draw power. Source: Sales.'},
-    {id:'sponsors', title:'Top 10 Sponsors',  list: liBlock(TOP10.sponsors),  meta:'Include key rights/activations. Source: Partnerships.'}
-  ];
-  const acc = $('#topAcc');
+  try{
+    const sections = [
+      {id:'investors',title:'Top 10 Investment Firms', list: liBlock(TOP10.investors), meta:'Criteria = AUM + relevance + presence. Source: ISP.'},
+      {id:'speakers', title:'Top 10 Speakers',  list: liBlock(TOP10.speakers),  meta:'Anchor names for PR/marketing. Source: Content.'},
+      {id:'exhibs',   title:'Top 10 Exhibitors',list: liBlock(TOP10.exhibitors),meta:'Curated by innovation / draw power. Source: Sales.'},
+      {id:'sponsors', title:'Top 10 Sponsors',  list: liBlock(TOP10.sponsors),  meta:'Include key rights/activations. Source: Partnerships.'}
+    ];
+    const acc = $('#topAcc');
 
-  sections.forEach((sec)=>{
-    const all = sec.list;
-    const topTen = all.slice(0,10);
-    const extras = all.length>10 ? all.slice(10) : [];
-    const d=document.createElement('details'); d.id=sec.id;
-    d.innerHTML = `
-      <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${sec.title}</summary>
-      <div class="panel two-col">
-        <div>
-          <ol class="top10">${topTen.map(item=>`<li>${item}</li>`).join('')}</ol>
-          <div class="meta">${sec.meta}</div>
-          ${extras.length ? `<div class="meta"><strong>Runner-up:</strong> ${extras.join(', ')}</div>` : ``}
-        </div>
-        <div class="meta"><strong>Status chips:</strong> <span class="k">add your own labels</span><br>
-          <span style="display:inline-block;margin-top:8px">
-            <span class="btn" style="cursor:default">Priority</span>
-            <span class="btn" style="cursor:default">Announce</span>
-            <span class="btn" style="cursor:default">Onsite</span>
-          </span>
-        </div>
-      </div>`;
-    acc.appendChild(d);
-  });
+    sections.forEach((sec)=>{
+      const all = sec.list;
+      const topTen = all.slice(0,10);
+      const extras = all.length>10 ? all.slice(10) : [];
+      const d=document.createElement('details'); d.id=sec.id;
+      d.innerHTML = `
+        <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${sec.title}</summary>
+        <div class="panel two-col">
+          <div>
+            <ol class="top10">${topTen.map(item=>`<li>${item}</li>`).join('')}</ol>
+            <div class="meta">${sec.meta}</div>
+            ${extras.length ? `<div class="meta"><strong>Runner-up:</strong> ${extras.join(', ')}</div>` : ``}
+          </div>
+          <div class="meta"><strong>Status chips:</strong> <span class="k">add your own labels</span><br>
+            <span style="display:inline-block;margin-top:8px">
+              <span class="btn" style="cursor:default">Priority</span>
+              <span class="btn" style="cursor:default">Announce</span>
+              <span class="btn" style="cursor:default">Onsite</span>
+            </span>
+          </div>
+        </div>`;
+      acc.appendChild(d);
+    });
 
-  // Key stats mosaic (two rows, scattered widths)
-  const pairs = pairBlock(TOP10.finalStats);
-  const widths = [4,3,2,3,4,3,2,3,4,3];
-  const grid = document.createElement('div');
-  grid.className = 'stats-wrap';
-  let inner = `<details><summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats</summary><div class="panel"><div class="stats-grid">`;
-  pairs.forEach((p,i)=>{
-    const span = widths[i % widths.length];
-    inner += `<div class="stat span-${span}"><div class="knum">${p.value||'-'}</div><div class="lbl">${p.label}</div></div>`;
-  });
-  inner += `</div></div></details>`;
-  grid.innerHTML = inner;
-  acc.appendChild(grid);
+    // Key stats mosaic (two rows, scattered widths)
+    const pairs = pairBlock(TOP10.finalStats);
+    const widths = [4,3,2,3,4,3,2,3,4,3];
+    const grid = document.createElement('div');
+    grid.className = 'stats-wrap';
+    let inner = `<details><summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats</summary><div class="panel"><div class="stats-grid">`;
+    pairs.forEach((p,i)=>{
+      const span = widths[i % widths.length];
+      inner += `<div class="stat span-${span}"><div class="knum">${p.value||'-'}</div><div class="lbl">${p.label}</div></div>`;
+    });
+    inner += `</div></div></details>`;
+    grid.innerHTML = inner;
+    acc.appendChild(grid);
+  } catch(e){ console.error('Top10s render error', e); }
 })();
 
-/*** Router (hash) + expand/collapse all ***/
+/*** Router (hash) + expand/collapse all — safe init ***/
 (function router(){
   const pages = $$('.page');
   const links = $$('#nav a');
@@ -589,10 +598,10 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
     show(id);
   }
   window.addEventListener('hashchange', initFromHash);
-  initFromHash();
+  try{ initFromHash(); } catch(e){ show('pocs'); }
 
   // expand/collapse all within current page
-  const getActivePage = () => links.find(a=>a.classList.contains('active')).dataset.page;
+  const getActivePage = () => (links.find(a=>a.classList.contains('active'))||links[0]).dataset.page;
   $('#expandAll').addEventListener('click', ()=>{
     $(`#${getActivePage()}`).querySelectorAll('details').forEach(d=>d.open=true);
   });
