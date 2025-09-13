@@ -51,8 +51,7 @@
   }
   nav a:hover{box-shadow:var(--ring);color:#fff}
   nav a.active{
-    color:#111;
-    border:1px solid transparent;
+    color:#111;border:1px solid transparent;
     background:
       linear-gradient(#12d3b1,#12d3b1) padding-box,
       linear-gradient(135deg,#12d3b1,#caa64c) border-box;
@@ -133,7 +132,7 @@
   ol.top10 li:last-child{border-bottom:none}
   .meta{margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#10141d,#0c1018);color:var(--muted);font-size:13px}
 
-  /* Key stats – “two rows scattered” mosaic */
+  /* Key stats – two-row scattered mosaic */
   .stats-wrap{margin-top:12px}
   .stats-grid{
     display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:110px;gap:12px
@@ -235,14 +234,14 @@
 /* Last-updated label (optional) */
 const LAST_UPDATED = 'DD-MMM-YYYY';
 
-/* Page 1: POCs & Info — paste line-by-line items */
+/* Page 1: POCs & Info — line-by-line */
 const POCS = {
   wifi: `
 WiFi SSID: [Event-SSID]  /  Password: [password]
 Back-of-house toilets: [Location A], [Location B]
 Staff access door codes: [xxxx] (Ops to update)
 `,
-  /* NEW: Critical info (red card). Keep short, most important first. */
+  /* Critical info (red card) */
   critical: `
 Emergency (Police/Ambulance): 999
 Medical desk (onsite): +966 5xx xxx xxx
@@ -280,7 +279,7 @@ Medical: [Location]
 `
 };
 
-/* Page 2: Areas — one row per line, pipes “|”  (Feature | Hall | Location) */
+/* Page 2: Areas — pipes “|”  (Feature | Hall | Location) */
 const AREAS = `
 AI Tour Desk | 5 | North of Hall 5, next to Info Desk
 Announcement Stage 1 / Private | 3 | Middle-west side of Hall 3
@@ -292,57 +291,59 @@ Country Pavilions | 3 | North end of Hall 3A
 Coworking Stations | 6 | West of Hall 6, opposite the Orbital Stage 4
 `;
 
-/* Page 3: Top 10s — paste 10 lines each (free text) */
+/* Page 3: Top 10s — one item per line */
 const TOP10 = {
+  /* Top 10 investment firms (11 provided; first 10 will show, runner-up noted) */
   investors: `
-[Investor 1] — focus / HQ / fund size
-[Investor 2]
-[Investor 3]
-[Investor 4]
-[Investor 5]
-[Investor 6]
-[Investor 7]
-[Investor 8]
-[Investor 9]
-[Investor 10]
+Goldman Sachs
+Apollo
+TPG
+UBS
+Blackrock
+SVC
+STV
+Jada Fund of Funds
+Citi
+General Atlantic
+Mubadala
 `,
   speakers: `
-[Speaker 1] — role / company / session
-[Speaker 2]
-[Speaker 3]
-[Speaker 4]
-[Speaker 5]
-[Speaker 6]
-[Speaker 7]
-[Speaker 8]
-[Speaker 9]
-[Speaker 10]
+Hon. Caroline D. Pham — Acting Chairman, U.S. Commodity Futures Trading Commission, Federal Government of United States
+Hon. Dr. Doris Uzoka-Anite — Minister of State for Finance, Federal Republic of Nigeria
+Ziad Thamer Al-Murshed — EVP & CFO, Aramco
+Dr. Mohammed Rahim — Group Chief Data Officer, Standard Chartered
+Leiming Chen — Chief Sustainability Officer, Ant International
+H.E. Dr Tariq Bin Hendi — CEO & Board Member, Astra Tech & Botim
+Olugbenga Agboola — Co-founder & CEO, Flutterwave
+Lori Schwartz — Global Head of Treasury Services, Payments, J.P. Morgan
+Dr. Eyad Kassar — Founder & Global CEO, Qlub
+Melike Kara Tanrikulu — CEO, e&Money
 `,
   exhibitors: `
-[Exhibitor 1] — booth # / product highlight
-[Exhibitor 2]
-[Exhibitor 3]
-[Exhibitor 4]
-[Exhibitor 5]
-[Exhibitor 6]
-[Exhibitor 7]
-[Exhibitor 8]
-[Exhibitor 9]
-[Exhibitor 10]
+Jp Morgan
+Terrapay
+Ant Group
+Mastercard
+Samsung Wallet
+Ripple
+Google Cloud
+Dell
+Amazon Payment
+Amex
 `,
   sponsors: `
-[Sponsor 1] — tier / key rights
-[Sponsor 2]
-[Sponsor 3]
-[Sponsor 4]
-[Sponsor 5]
-[Sponsor 6]
-[Sponsor 7]
-[Sponsor 8]
-[Sponsor 9]
-[Sponsor 10]
+Alrajhi Bank
+Riyadh bank
+Snb bank
+Vision bank
+Stc bank
+Tamara
+Visa
+Abdul latif Jameel
+BIM venture
+Elm
 `,
-  /* Key stats: label: value. Keep 6–10 lines. */
+  /* Key stats: label: value (edit later) */
   finalStats: `
 Total Attendees: [#]
 International Share: [%]
@@ -389,7 +390,6 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
       let chipHTML = '';
       if(pw){ chipHTML += `<span class="chip" data-copy="${pw[1].trim()}">Copy password</span>`; }
       else if(phAll.length){
-        // copy the first phone number
         chipHTML += `<span class="chip" data-copy="${phAll[0].replace(/\s+/g,' ').trim()}">Copy phone</span>`;
       }
       return `<li><span>${txt}</span>${chipHTML}</li>`;
@@ -432,10 +432,10 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
   });
 })();
 
-/*** TOP 10s (collapsed) + key stats mosaic in 2 rows ***/
+/*** TOP 10s (collapsed) + key stats mosaic (2 rows) ***/
 (function renderTop10s(){
   const sections = [
-    {id:'investors',title:'Top 10 Investors', list: liBlock(TOP10.investors), meta:'Criteria = strategic relevance + stage fit + availability onsite. Source: ISP.'},
+    {id:'investors',title:'Top 10 Investment Firms', list: liBlock(TOP10.investors), meta:'Criteria = AUM + relevance + presence. Source: ISP.'},
     {id:'speakers', title:'Top 10 Speakers',  list: liBlock(TOP10.speakers),  meta:'Anchor names for PR/marketing. Source: Content.'},
     {id:'exhibs',   title:'Top 10 Exhibitors',list: liBlock(TOP10.exhibitors),meta:'Curated by innovation / draw power. Source: Sales.'},
     {id:'sponsors', title:'Top 10 Sponsors',  list: liBlock(TOP10.sponsors),  meta:'Include key rights/activations. Source: Partnerships.'}
@@ -443,13 +443,17 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
   const acc = $('#topAcc');
 
   sections.forEach((sec)=>{
+    const all = sec.list;
+    const topTen = all.slice(0,10);
+    const extras = all.length>10 ? all.slice(10) : [];
     const d=document.createElement('details'); d.id=sec.id;
     d.innerHTML = `
       <summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${sec.title}</summary>
       <div class="panel two-col">
         <div>
-          <ol class="top10">${sec.list.map(item=>`<li>${item}</li>`).join('')}</ol>
+          <ol class="top10">${topTen.map(item=>`<li>${item}</li>`).join('')}</ol>
           <div class="meta">${sec.meta}</div>
+          ${extras.length ? `<div class="meta"><strong>Runner-up:</strong> ${extras.join(', ')}</div>` : ``}
         </div>
         <div class="meta"><strong>Status chips:</strong> <span class="k">add your own labels</span><br>
           <span style="display:inline-block;margin-top:8px">
@@ -464,7 +468,7 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
 
   // Key stats mosaic (two rows, scattered widths)
   const pairs = pairBlock(TOP10.finalStats);
-  const widths = [4,3,2,3,4,3,2,3,4,3]; // will wrap into two rows via grid
+  const widths = [4,3,2,3,4,3,2,3,4,3];
   const grid = document.createElement('div');
   grid.className = 'stats-wrap';
   let inner = `<details><summary><span class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Final Key Stats</summary><div class="panel"><div class="stats-grid">`;
@@ -502,10 +506,6 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
     $(`#${getActivePage()}`).querySelectorAll('details').forEach(d=>d.open=false);
   });
 })();
-
-/* Optional: show last-updated somewhere if you want
-// document.body.insertAdjacentHTML('beforeend', `<div style="position:fixed;bottom:10px;right:14px;font:12px/1 Inter;color:#9aa4b2">Last updated: ${LAST_UPDATED}</div>`);
-*/
 </script>
 </body>
 </html>
